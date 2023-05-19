@@ -5,6 +5,8 @@ function ChatDisplay({ userChatsIDs }) {
 	// array of info for each chat in userChats
 	const [chatsInfo, setChatsInfo] = useState();
 
+	console.log(userChatsIDs);
+
 	// which is the current chat to display
 	const [currentChat, setCurrentChat] = useState();
 

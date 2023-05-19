@@ -2,6 +2,7 @@ import './App.css';
 import { useState } from 'react';
 import Login from './Pages/Auth/Login/Login';
 import Register from './Pages/Auth/Register/Register';
+import Main from './Pages/Main/Main';
 
 // controls which component to display according to displayedPage
 // gets userID from Login, then passes it into Main
@@ -27,7 +28,9 @@ function App() {
 
 	// after logging in, displayedPage = Main, return Main component
 	// Main component takes in userInfo obtained from Login component
-	return <div className="App">test</div>;
+	if (displayedPage === 'Main') {
+		return <Main userInfo={userInfo} />;
+	}
 }
 
 export default App;
