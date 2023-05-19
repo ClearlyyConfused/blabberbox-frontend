@@ -1,6 +1,7 @@
 import './App.css';
 import { useState } from 'react';
 import Login from './Pages/Auth/Login/Login';
+import Register from './Pages/Auth/Register/Register';
 
 // controls which component to display according to displayedPage
 // gets userID from Login, then passes it into Main
@@ -16,10 +17,13 @@ function App() {
 	// if displayedPage = Login, return Login component
 	// Login component takes in setUserInfo and updates userInfo when logged in
 	if (displayedPage === 'Login') {
-		return <Login setUserInfo={setUserInfo} setDisplayedPage={setDisplayedPage} />;
+		return <Login setDisplayedPage={setDisplayedPage} setUserInfo={setUserInfo} />;
 	}
 
 	// if displayedPage = Register, return Register component
+	if (displayedPage === 'Register') {
+		return <Register setDisplayedPage={setDisplayedPage} />;
+	}
 
 	// after logging in, displayedPage = Main, return Main component
 	// Main component takes in userInfo obtained from Login component

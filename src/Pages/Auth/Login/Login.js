@@ -39,7 +39,7 @@ function Login({ setUserInfo, setDisplayedPage }) {
 					</div>
 					<div>
 						<label htmlFor="password">Password</label>
-						<input id="password" type="password" />
+						<input id="password" type="text" />
 					</div>
 					<button type="submit">Submit</button>
 				</form>
