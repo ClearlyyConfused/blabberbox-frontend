@@ -49,7 +49,7 @@ function ChatDisplay({ userChatsIDs, userInfo }) {
 	}, [userChatsIDs]);
 
 	return (
-		<main>
+		<main className="chat-display">
 			{/* ChatList component displays each chat name with latest message */}
 			{/* takes in chatsInfo */}
 			<ChatList chatsInfo={chatsInfo} setCurrentChat={setCurrentChat} />

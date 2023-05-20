@@ -30,7 +30,7 @@ function CurrentChat({ chatsInfo, currentChat, userInfo }) {
 
 	if (currentChatInfo !== undefined) {
 		return (
-			<section>
+			<section className="current-chat">
 				{currentChatInfo.name}
 				<ol>
 					{currentChatInfo.messages.map((message) => {

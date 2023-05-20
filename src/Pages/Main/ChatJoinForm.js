@@ -21,7 +21,7 @@ function ChatJoinForm({ userInfo, fetchUserChats }) {
 	}
 
 	return (
-		<section className="create-chat-form">
+		<section className="chat-form">
 			<h1>Join Chat</h1>
 			<form onSubmit={handleSubmit}>
 				<div>
