@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import ChatDisplay from './ChatDisplay/ChatDisplay';
-import ChatCreateForm from './ChatCreateForm/ChatCreateForm';
-import ChatJoinForm from './ChatJoinForm/ChatJoinForm';
+import ChatCreateForm from './ChatCreateForm';
+import ChatJoinForm from './ChatJoinForm';
 
 // uses userInfo from Main to get userChats from API when needed
 // updates userChats whenever user creates/joins a chat to get an updated list of chats

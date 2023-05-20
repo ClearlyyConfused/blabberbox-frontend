@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import ChatList from './ChatList/ChatList';
-import CurrentChat from './CurrentChat/CurrentChat';
+import ChatList from './ChatList';
+import CurrentChat from './CurrentChat';
 
 // updates and displays information about user's chats
 function ChatDisplay({ userChatsIDs, userInfo }) {

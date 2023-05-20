@@ -1,7 +1,7 @@
 import './App.css';
 import { useState } from 'react';
-import Login from './Pages/Auth/Login/Login';
-import Register from './Pages/Auth/Register/Register';
+import Login from './Pages/Auth/Login';
+import Register from './Pages/Auth/Register';
 import Main from './Pages/Main/Main';
 
 // controls which component to display according to displayedPage

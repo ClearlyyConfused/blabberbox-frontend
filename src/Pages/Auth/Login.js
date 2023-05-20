@@ -1,4 +1,6 @@
-function Register({ setDisplayedPage }) {
+import './Auth.css';
+
+function Login({ setUserInfo, setDisplayedPage }) {
 	function handleSubmit(event) {
 		event.preventDefault();
 
@@ -13,14 +15,24 @@ function Register({ setDisplayedPage }) {
 			}),
 		};
 
-		fetch('https://chatterbox-api.onrender.com/createUser', reqOptions).then(
-			setDisplayedPage('Login')
-		);
+		fetch('https://chatterbox-api.onrender.com/getUser', reqOptions)
+			.then((res) => res.json())
+			.then((user) => {
+				if (user.length !== 0) {
+					setUserInfo({
+						userID: user[0]._id,
+						username: user[0].username,
+						password: user[0].password,
+						chats: user[0].chats,
+					});
+					setDisplayedPage('Main');
+				}
+			});
 	}
 
 	return (
-		<main className="register">
-			<h1>Register</h1>
+		<main className="auth">
+			<h1>LOGIN</h1>
 			<form onSubmit={handleSubmit}>
 				<div>
 					<label htmlFor="username">Username</label>
@@ -32,9 +44,15 @@ function Register({ setDisplayedPage }) {
 				</div>
 				<button type="submit">Submit</button>
 			</form>
-			<button onClick={() => setDisplayedPage('Login')}>Back</button>
+			<button
+				onClick={() => {
+					setDisplayedPage('Register');
+				}}
+			>
+				Create an account
+			</button>
 		</main>
 	);
 }
 
-export default Register;
+export default Login;
