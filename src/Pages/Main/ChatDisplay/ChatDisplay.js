@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ChatList from './ChatList/ChatList';
 
 // updates and displays information about user's chats
 function ChatDisplay({ userChatsIDs }) {
@@ -8,9 +9,7 @@ function ChatDisplay({ userChatsIDs }) {
 	// which is the current chat to display
 	const [currentChat, setCurrentChat] = useState();
 
-	// fetchChatsInfo()
-	// for each chatID in userChats, fetch chat data using the chatID
-	// append chat data to chatsInfo
+	// return chat data for the chatID
 	async function fetchChatInfo(chatID) {
 		const reqOptions = {
 			method: 'POST',
@@ -28,7 +27,8 @@ function ChatDisplay({ userChatsIDs }) {
 			});
 	}
 
-	async function updateChat() {
+	// fetches chat info for each chat then updates ChatsInfo
+	async function updateChatsInfo() {
 		let arr = [];
 		for (const chatID of userChatsIDs) {
 			const chat = await fetchChatInfo(chatID);
@@ -40,18 +40,23 @@ function ChatDisplay({ userChatsIDs }) {
 	// useEffect() on render, set an interval to call fetchChatsInfo every X seconds
 	useEffect(() => {
 		if (userChatsIDs !== undefined) {
-			const timer = setInterval(updateChat, 5000);
+			const timer = setInterval(updateChatsInfo, 5000);
 			return () => {
 				clearInterval(timer);
 			};
 		}
 	}, [userChatsIDs]);
 
-	// ChatList component displays each chat name with latest message
-	// takes in chatsInfo
+	return (
+		<main>
+			{/* ChatList component displays each chat name with latest message */}
+			{/* takes in chatsInfo */}
+			<ChatList chatsInfo={chatsInfo} />
 
-	// CurrentChat component displays the currentChat and allows to send messages
-	// takes in currentChat
+			{/* CurrentChat component displays the currentChat and allows to send messages */}
+			{/* takes in currentChat */}
+		</main>
+	);
 }
 
 export default ChatDisplay;
