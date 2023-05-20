@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import ChatList from './ChatList/ChatList';
+import CurrentChat from './CurrentChat/CurrentChat';
 
 // updates and displays information about user's chats
-function ChatDisplay({ userChatsIDs }) {
+function ChatDisplay({ userChatsIDs, userInfo }) {
 	// array of info for each chat in userChats
 	const [chatsInfo, setChatsInfo] = useState([]);
 
@@ -51,10 +52,11 @@ function ChatDisplay({ userChatsIDs }) {
 		<main>
 			{/* ChatList component displays each chat name with latest message */}
 			{/* takes in chatsInfo */}
-			<ChatList chatsInfo={chatsInfo} />
+			<ChatList chatsInfo={chatsInfo} setCurrentChat={setCurrentChat} />
 
 			{/* CurrentChat component displays the currentChat and allows to send messages */}
-			{/* takes in currentChat */}
+			{/* takes in currentChat and ChatsInfo */}
+			<CurrentChat chatsInfo={chatsInfo} currentChat={currentChat} userInfo={userInfo} />
 		</main>
 	);
 }

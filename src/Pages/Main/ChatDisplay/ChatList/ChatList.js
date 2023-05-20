@@ -1,9 +1,13 @@
-function ChatList({ chatsInfo }) {
+function ChatList({ chatsInfo, setCurrentChat }) {
 	return (
 		<ol>
 			{chatsInfo.map((chat) => {
 				return (
-					<li>
+					<li
+						onClick={() => {
+							setCurrentChat(chat.name);
+						}}
+					>
 						<p>{chat.name}</p>
 						<p>
 							{chat.messages.slice(-1)[0] !== undefined

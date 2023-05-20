@@ -50,7 +50,7 @@ function Main({ userInfo }) {
 
 			{/*	chatDisplay component to display list of chats and current chat */}
 			{/* takes in userChatsIDs */}
-			<ChatDisplay userChatsIDs={userChatsIDs} />
+			<ChatDisplay userChatsIDs={userChatsIDs} userInfo={userInfo} />
 		</main>
 	);
 }
