@@ -31,25 +31,22 @@ function CurrentChat({ chatsInfo, currentChat, userInfo }) {
 	if (currentChatInfo !== undefined) {
 		return (
 			<section className="current-chat">
-				{currentChatInfo.name}
+				<h1>{currentChatInfo.name}</h1>
 				<ol>
 					{currentChatInfo.messages.map((message) => {
 						return (
-							<li>
+							<li className={message.user === userInfo.username ? 'user-message' : ''}>
 								<p>{message.message}</p>
 								<p>{message.user}</p>
 							</li>
 						);
 					})}
 				</ol>
-				<section>
-					<h2>Message</h2>
+				<section className="message-form">
 					<form onSubmit={handleSubmit}>
-						<div>
-							<label htmlFor="message">Message</label>
-							<input id="message" type="text" />
-						</div>
-						<button type="submit">Submit</button>
+						<label htmlFor="message"></label>
+						<input id="message" type="text" />
+						<button type="submit">Send</button>
 					</form>
 				</section>
 			</section>
