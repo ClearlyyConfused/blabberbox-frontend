@@ -11,7 +11,7 @@ function ChatList({ chatsInfo, setCurrentChat }) {
 						>
 							<h3>{chat.name}</h3>
 							<p>
-								Latest Message:{' '}
+								Latest:{' '}
 								{chat.messages.slice(-1)[0] !== undefined
 									? chat.messages.slice(-1)[0].message
 									: 'N/A'}

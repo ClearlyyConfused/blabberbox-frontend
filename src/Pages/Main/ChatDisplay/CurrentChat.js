@@ -33,14 +33,26 @@ function CurrentChat({ chatsInfo, currentChat, userInfo }) {
 			<section className="current-chat">
 				<h1>{currentChatInfo.name}</h1>
 				<ol>
-					{currentChatInfo.messages.map((message) => {
-						return (
-							<li className={message.user === userInfo.username ? 'user-message' : ''}>
-								<p>{message.message}</p>
-								<p>{message.user}</p>
-							</li>
-						);
-					})}
+					<div>
+						{currentChatInfo.messages.map((message) => {
+							console.log(message);
+							return (
+								<li className={message.user === userInfo.username ? 'user-message' : ''}>
+									<h4>{message.user} </h4>
+									<p>{message.message}</p>
+									<p className="message-date">
+										{new Date(message.timeSent).toLocaleTimeString('en-US', {
+											year: 'numeric',
+											month: 'numeric',
+											day: 'numeric',
+											hour: 'numeric',
+											minute: 'numeric',
+										})}
+									</p>
+								</li>
+							);
+						})}
+					</div>
 				</ol>
 				<section className="message-form">
 					<form onSubmit={handleSubmit}>
