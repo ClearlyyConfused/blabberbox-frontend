@@ -26,7 +26,7 @@ function Main({ userInfo }) {
 			}),
 		};
 
-		fetch('https://chatterbox-api.onrender.com/getUser', reqOptions)
+		fetch('https://chatterbox-backend.vercel.app/getUser', reqOptions)
 			.then((res) => res.json())
 			.then((user) => {
 				setUserChatsIDs(user[0].chats);

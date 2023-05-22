@@ -15,7 +15,7 @@ function Register({ setDisplayedPage }) {
 			}),
 		};
 
-		fetch('https://chatterbox-api.onrender.com/createUser', reqOptions).then(
+		fetch('https://chatterbox-backend.vercel.app/createUser', reqOptions).then(
 			setDisplayedPage('Login')
 		);
 	}

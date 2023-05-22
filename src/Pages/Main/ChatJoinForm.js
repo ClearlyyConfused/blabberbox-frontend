@@ -13,7 +13,7 @@ function ChatJoinForm({ userInfo, fetchUserChats }) {
 			}),
 		};
 		// create a new chat then updates the userInfo
-		fetch('https://chatterbox-api.onrender.com/joinChat', reqOptions).then((res) =>
+		fetch('https://chatterbox-backend.vercel.app/joinChat', reqOptions).then((res) =>
 			res.json().then((data) => {
 				fetchUserChats();
 			})

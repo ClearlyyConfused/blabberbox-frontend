@@ -23,7 +23,7 @@ function CurrentChat({ chatsInfo, currentChat, userInfo }) {
 			}),
 		};
 
-		fetch('https://chatterbox-api.onrender.com/messageChat', reqOptions).then((res) =>
+		fetch('https://chatterbox-backend.vercel.app/messageChat', reqOptions).then((res) =>
 			res.json().then((data) => {})
 		);
 	}
