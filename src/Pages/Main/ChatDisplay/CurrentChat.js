@@ -1,3 +1,8 @@
+import { io } from 'socket.io-client';
+const socket = io.connect(
+	'https://chatterbox-backend-git-websocket-clearlyyconfused.vercel.app/'
+); // url for backend
+
 function CurrentChat({ chatsInfo, currentChat, userInfo }) {
 	let currentChatInfo;
 
@@ -24,7 +29,10 @@ function CurrentChat({ chatsInfo, currentChat, userInfo }) {
 		};
 
 		fetch('https://chatterbox-backend.vercel.app/messageChat', reqOptions).then((res) =>
-			res.json().then((data) => {})
+			res.json().then((data) => {
+				// alert backend that message has been sent
+				socket.emit('send_message');
+			})
 		);
 	}
 

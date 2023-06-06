@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import ChatList from './ChatList';
 import CurrentChat from './CurrentChat';
 import './ChatDisplay.css';
+import { io } from 'socket.io-client';
+const socket = io.connect(
+	'https://chatterbox-backend-git-websocket-clearlyyconfused.vercel.app/'
+); // url for backend
 
 // updates and displays information about user's chats
 function ChatDisplay({ userChatsIDs, userInfo }) {
@@ -39,13 +43,13 @@ function ChatDisplay({ userChatsIDs, userInfo }) {
 		setChatsInfo(arr);
 	}
 
-	// useEffect() on render, set an interval to call fetchChatsInfo every X seconds
+	// useEffect() whenever userChatsIDs changes, set an interval to call fetchChatsInfo every X seconds
 	useEffect(() => {
 		if (userChatsIDs !== undefined) {
-			const timer = setInterval(updateChatsInfo, 5000);
-			return () => {
-				clearInterval(timer);
-			};
+			updateChatsInfo();
+			socket.on('alertMessageSent', () => {
+				updateChatsInfo();
+			});
 		}
 	}, [userChatsIDs]);
 
