@@ -3,10 +3,15 @@ import ChatDisplay from './ChatDisplay/ChatDisplay';
 import ChatCreateForm from './ChatCreateForm';
 import ChatJoinForm from './ChatJoinForm';
 import './Main.css';
+import { io } from 'socket.io-client';
+const socket = io.connect(
+	'https://chatterbox-backend-git-websocket-clearlyyconfused.vercel.app'
+); // url for backend
 
 // uses userInfo from Main to get userChats from API when needed
 // updates userChats whenever user creates/joins a chat to get an updated list of chats
 function Main({ userInfo }) {
+	socket.emit('send_message');
 	// userChats: useState for userInfos's chats from API
 	// initially undefined
 	const [userChatsIDs, setUserChatsIDs] = useState();
