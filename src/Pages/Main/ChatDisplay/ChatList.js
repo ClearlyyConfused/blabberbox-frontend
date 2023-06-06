@@ -6,7 +6,7 @@ function ChatList({ chatsInfo, setCurrentChat }) {
 					return (
 						<li
 							onClick={() => {
-								setCurrentChat(chat.name);
+								setCurrentChat(chat._id);
 							}}
 						>
 							<h3>{chat.name}</h3>

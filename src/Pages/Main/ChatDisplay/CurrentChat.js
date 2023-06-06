@@ -1,10 +1,12 @@
 function CurrentChat({ chatsInfo, currentChat, userInfo }) {
 	let currentChatInfo;
+	console.log(currentChat);
 
 	// set currentChatInfo to currentChat being displayed
 	for (const chat of chatsInfo) {
-		if (chat.name === currentChat) {
+		if (chat._id === currentChat) {
 			currentChatInfo = chat;
+			console.log(currentChatInfo);
 		}
 	}
 
