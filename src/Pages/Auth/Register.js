@@ -15,7 +15,7 @@ function Register({ setDisplayedPage }) {
 			}),
 		};
 
-		fetch('https://chatterbox-backend.vercel.app/createUser', reqOptions).then(
+		fetch('https://blabberbox-backend.vercel.app/createUser', reqOptions).then(
 			setDisplayedPage('Login')
 		);
 	}

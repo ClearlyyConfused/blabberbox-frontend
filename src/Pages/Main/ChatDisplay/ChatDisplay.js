@@ -22,7 +22,7 @@ function ChatDisplay({ userChatsIDs, userInfo }) {
 				chatID: chatID,
 			}),
 		};
-		return fetch('https://chatterbox-backend.vercel.app/getChat', reqOptions)
+		return fetch('https://blabberbox-backend.vercel.app/getChat', reqOptions)
 			.then((res) => res.json())
 			.then((chat) => {
 				return chat;

@@ -13,7 +13,7 @@ function ChatCreateForm({ userInfo, fetchUserChats }) {
 			}),
 		};
 		// create a new chat then updates the userInfo
-		fetch('https://chatterbox-backend.vercel.app/createChat', reqOptions).then((res) =>
+		fetch('https://blabberbox-backend.vercel.app/createChat', reqOptions).then((res) =>
 			res.json().then((data) => {
 				fetchUserChats();
 			})

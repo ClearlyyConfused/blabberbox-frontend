@@ -15,7 +15,7 @@ function Login({ setUserInfo, setDisplayedPage }) {
 			}),
 		};
 
-		fetch('https://chatterbox-backend.vercel.app/getUser', reqOptions)
+		fetch('https://blabberbox-backend.vercel.app/getUser', reqOptions)
 			.then((res) => res.json())
 			.then((user) => {
 				if (user.length !== 0) {

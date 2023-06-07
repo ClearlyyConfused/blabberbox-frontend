@@ -1,6 +1,5 @@
 function CurrentChat({ chatsInfo, currentChat, userInfo }) {
 	let currentChatInfo;
-	console.log(currentChat);
 
 	// set currentChatInfo to currentChat being displayed
 	for (const chat of chatsInfo) {
@@ -13,21 +12,45 @@ function CurrentChat({ chatsInfo, currentChat, userInfo }) {
 	// sends message to the currentChat
 	function handleSubmit(event) {
 		event.preventDefault();
-		const reqOptions = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				userID: userInfo.userID,
-				chatID: currentChatInfo._id,
-				message: event.target.elements.message.value,
-			}),
-		};
+		if (event.target.elements.image.files[0] !== undefined) {
+			let reader = new FileReader();
+			reader.readAsDataURL(event.target.elements.image.files[0]);
+			reader.onloadend = () => {
+				const reqOptions = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						userID: userInfo.userID,
+						chatID: currentChatInfo._id,
+						message: event.target.elements.message.value,
+						image: reader.result,
+					}),
+				};
 
-		fetch('https://chatterbox-backend.vercel.app/messageChat', reqOptions).then((res) =>
-			res.json().then((data) => {})
-		);
+				fetch('https://blabberbox-backend.vercel.app/messageChat', reqOptions).then(
+					(res) => res.json().then((data) => {})
+				);
+			};
+		} else {
+			const reqOptions = {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					userID: userInfo.userID,
+					chatID: currentChatInfo._id,
+					message: event.target.elements.message.value,
+					image: '',
+				}),
+			};
+
+			fetch('https://blabberbox-backend.vercel.app/messageChat', reqOptions).then((res) =>
+				res.json().then((data) => {})
+			);
+		}
 	}
 
 	if (currentChatInfo !== undefined) {
@@ -60,6 +83,12 @@ function CurrentChat({ chatsInfo, currentChat, userInfo }) {
 					<form onSubmit={handleSubmit}>
 						<label htmlFor="message"></label>
 						<input id="message" type="text" />
+						<input
+							type="file"
+							id="image"
+							name="image"
+							accept="image/png, image/jpeg"
+						></input>
 						<button type="submit">Send</button>
 					</form>
 				</section>
