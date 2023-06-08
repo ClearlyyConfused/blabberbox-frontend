@@ -1,48 +1,25 @@
 import { useEffect, useState } from 'react';
 import ChatList from './ChatList';
 import CurrentChat from './CurrentChat';
+import ChatDisplayLogic from './ChatDisplayLogic';
 import './ChatDisplay.css';
 
-// updates and displays information about user's chats
+// fetches and displays chat info using userChatsIDs
 function ChatDisplay({ userChatsIDs, userInfo }) {
-	// array of info for each chat in userChats
+	// array of info for each chat
 	const [chatsInfo, setChatsInfo] = useState([]);
-
-	// which is the current chat to display
+	// current chat to display
 	const [currentChat, setCurrentChat] = useState();
+	// get logic for all components
+	const { updateChatsInfo, sendMessage, getCurrentChatInfo } = ChatDisplayLogic(userChatsIDs, setChatsInfo);
 
-	// return chat data for the chatID
-	async function fetchChatInfo(chatID) {
-		const reqOptions = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				chatID: chatID,
-			}),
-		};
-		return fetch('https://blabberbox-backend.vercel.app/getChat', reqOptions)
-			.then((res) => res.json())
-			.then((chat) => {
-				return chat;
-			});
-	}
-
-	// fetches chat info for each chat then updates ChatsInfo
-	async function updateChatsInfo() {
-		let arr = [];
-		for (const chatID of userChatsIDs) {
-			const chat = await fetchChatInfo(chatID);
-			arr.push(chat);
-		}
-		setChatsInfo(arr);
-	}
-
-	// useEffect() on render, set an interval to call fetchChatsInfo every X seconds
+	// whenever user's chat IDs change, set an interval to fetch info from all the chatIDs
 	useEffect(() => {
 		if (userChatsIDs !== undefined) {
-			const timer = setInterval(updateChatsInfo, 5000);
+			updateChatsInfo();
+			const timer = setInterval(() => {
+				updateChatsInfo();
+			}, 10000);
 			return () => {
 				clearInterval(timer);
 			};
@@ -51,13 +28,15 @@ function ChatDisplay({ userChatsIDs, userInfo }) {
 
 	return (
 		<main className="chat-display">
-			{/* ChatList component displays each chat name with latest message */}
-			{/* takes in chatsInfo */}
+			{/* ChatList component displays each chat name and sets the current chat */}
 			<ChatList chatsInfo={chatsInfo} setCurrentChat={setCurrentChat} />
 
-			{/* CurrentChat component displays the currentChat and allows to send messages */}
-			{/* takes in currentChat and ChatsInfo */}
-			<CurrentChat chatsInfo={chatsInfo} currentChat={currentChat} userInfo={userInfo} />
+			{/* CurrentChat component displays the current chat info and allows to send messages to that chat */}
+			<CurrentChat
+				currentChat={getCurrentChatInfo(chatsInfo, currentChat)}
+				userInfo={userInfo}
+				sendMessage={sendMessage}
+			/>
 		</main>
 	);
 }

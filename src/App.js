@@ -4,30 +4,25 @@ import Login from './Pages/Auth/Login';
 import Register from './Pages/Auth/Register';
 import Main from './Pages/Main/Main';
 
-// controls which component to display according to displayedPage
-// gets userID from Login, then passes it into Main
+// controls which component (login/register/main) to display according to displayedPage
+// gets userInfo from Login, then passes it into Main
 function App() {
-	// displayedPage: useState for displayed page
-	// initially login page
+	// sets current page display
 	const [displayedPage, setDisplayedPage] = useState('Login');
-
-	// userInfo: useState for logged in user's info
-	// initially undefined
+	// obtained from login component
 	const [userInfo, setUserInfo] = useState();
 
-	// if displayedPage = Login, return Login component
-	// Login component takes in setUserInfo and updates userInfo when logged in
+	// for user login and sets userInfo
 	if (displayedPage === 'Login') {
 		return <Login setDisplayedPage={setDisplayedPage} setUserInfo={setUserInfo} />;
 	}
 
-	// if displayedPage = Register, return Register component
+	// for registering users
 	if (displayedPage === 'Register') {
 		return <Register setDisplayedPage={setDisplayedPage} />;
 	}
 
-	// after logging in, displayedPage = Main, return Main component
-	// Main component takes in userInfo obtained from Login component
+	// after logging in, displayedPage = Main, returns the actual chatting app
 	if (displayedPage === 'Main') {
 		return <Main userInfo={userInfo} />;
 	}

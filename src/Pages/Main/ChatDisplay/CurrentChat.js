@@ -1,68 +1,37 @@
-function CurrentChat({ chatsInfo, currentChat, userInfo }) {
-	let currentChatInfo;
-
-	// set currentChatInfo to currentChat being displayed
-	for (const chat of chatsInfo) {
-		if (chat._id === currentChat) {
-			currentChatInfo = chat;
-			console.log(currentChatInfo);
-		}
-	}
-
-	// sends message to the currentChat
+// is the current chat being displayed on the screen, user can send messages to that chat
+function CurrentChat({ currentChat, userInfo, sendMessage }) {
+	// submit button that takes info from form to input into sendMessage
 	function handleSubmit(event) {
 		event.preventDefault();
+		const message = event.target.elements.message.value;
+		// if message has an image, convert it then call sendMessage with result
 		if (event.target.elements.image.files[0] !== undefined) {
 			let reader = new FileReader();
 			reader.readAsDataURL(event.target.elements.image.files[0]);
 			reader.onloadend = () => {
-				const reqOptions = {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						userID: userInfo.userID,
-						chatID: currentChatInfo._id,
-						message: event.target.elements.message.value,
-						image: reader.result,
-					}),
-				};
-
-				fetch('https://blabberbox-backend.vercel.app/messageChat', reqOptions).then(
-					(res) => res.json().then((data) => {})
-				);
+				const image = reader.result;
+				sendMessage(message, image, userInfo, currentChat);
+				event.target.elements.message.value = '';
+				event.target.elements.image.value = '';
 			};
-		} else {
-			const reqOptions = {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					userID: userInfo.userID,
-					chatID: currentChatInfo._id,
-					message: event.target.elements.message.value,
-					image: '',
-				}),
-			};
-
-			fetch('https://blabberbox-backend.vercel.app/messageChat', reqOptions).then((res) =>
-				res.json().then((data) => {})
-			);
+		} // if not, send ""
+		else {
+			sendMessage(message, '', userInfo, currentChat);
+			event.target.elements.message.value = '';
 		}
 	}
 
-	if (currentChatInfo !== undefined) {
+	if (currentChat !== undefined) {
 		return (
 			<section className="current-chat">
-				<h1>{currentChatInfo.name}</h1>
-				<ol>
+				<h1>{currentChat.name}</h1>
+				<ol className="chatbox">
+					{/* column reverse on .chatbox makes scroll start at bottom, div makes it so messages aren't reversed*/}
 					<div>
-						{currentChatInfo.messages.map((message) => {
-							console.log(message);
+						{currentChat.messages.map((message) => {
 							return (
-								<li className={message.user === userInfo.username ? 'user-message' : ''}>
+								<li className={message.user === userInfo.username ? 'user-message message' : 'message'}>
+									<img src={message.image} alt="" srcset="" />
 									<h4>{message.user} </h4>
 									<p>{message.message}</p>
 									<p className="message-date">
@@ -83,12 +52,7 @@ function CurrentChat({ chatsInfo, currentChat, userInfo }) {
 					<form onSubmit={handleSubmit}>
 						<label htmlFor="message"></label>
 						<input id="message" type="text" />
-						<input
-							type="file"
-							id="image"
-							name="image"
-							accept="image/png, image/jpeg"
-						></input>
+						<input type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
 						<button type="submit">Send</button>
 					</form>
 				</section>

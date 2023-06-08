@@ -5,17 +5,8 @@
 		flex-direction: column;
 	}
 
-	.chat-list::-webkit-scrollbar,
-	.current-chat ol::-webkit-scrollbar {
-		width: 2px;
-	}
-
-	.chat-list::-webkit-scrollbar-thumb,
-	.current-chat ol::-webkit-scrollbar-thumb {
-		border-radius: 10px;
-		background: rgb(255, 255, 255);
-	}
-	.chat-list {
+	// chat list -------------------------------------
+	.chat-list-container {
 		box-sizing: border-box;
 		width: 30%;
 		min-width: 200px;
@@ -29,26 +20,30 @@
 			width: 100%;
 			min-width: 0px;
 		}
-		ol {
+		// list of chats
+		.chat-list {
 			margin: 0;
 			padding: 0px;
 			list-style: none;
 			direction: ltr;
 
-			li:hover {
+			// chats listed
+			.chat:hover {
 				cursor: pointer;
 				background-color: rgba(255, 255, 255, 0.1);
 			}
-			li {
+			.chat {
 				border: 2px solid;
 				border-radius: 0px 20px 20px 0px;
 				padding: 10px;
 
+				// name of chat
 				h3 {
 					margin: 0;
 					overflow: hidden;
 					text-overflow: ellipsis;
 				}
+				// latest chat message
 				p {
 					margin: 0;
 					overflow: hidden;
@@ -60,6 +55,7 @@
 		}
 	}
 
+	// current chat -------------------------------------
 	.current-chat {
 		display: flex;
 		flex-direction: column;
@@ -67,14 +63,17 @@
 		box-sizing: border-box;
 		width: 100%;
 
+		// chat title
 		h1 {
 			margin: 0;
 			margin-bottom: 20px;
 			font-size: 40px;
 		}
-		ol {
+
+		// chat itself
+		.chatbox {
 			display: flex;
-			flex-direction: column-reverse;
+			flex-direction: column-reverse; // for .chatbox to scroll to bottom by default
 			gap: 10px;
 			margin: 0;
 			padding: 0;
@@ -84,15 +83,32 @@
 			overflow-y: scroll;
 			list-style: none;
 
-			li {
+			.user-message {
+				align-self: flex-end;
+				margin-left: auto;
+				text-align: right;
+			}
+			.message {
+				display: flex;
+				flex-direction: column;
 				border: 2px solid white;
 				border-radius: 10px;
 				padding: 10px;
 				width: fit-content;
+				// normalizes message size
 				min-width: 40%;
 				max-width: 80%;
+
+				// force messages take up majority view on mobile layout
 				@media (max-width: 426px) {
 					min-width: 80%;
+				}
+
+				img {
+					align-self: center;
+					width: 100%;
+					max-width: 400px;
+					height: auto;
 				}
 				h4 {
 					margin: 0;
@@ -109,12 +125,8 @@
 					text-overflow: ellipsis;
 				}
 			}
-			.user-message {
-				align-self: flex-end;
-				margin-left: auto;
-				text-align: right;
-			}
 		}
+
 		.message-form {
 			padding: 20px 0px;
 			width: 100%;
@@ -129,5 +141,16 @@
 				}
 			}
 		}
+	}
+
+	// scrollbar for chat list and current chat
+	.chat-list-container::-webkit-scrollbar,
+	.current-chat ol::-webkit-scrollbar {
+		width: 2px;
+	}
+	.chat-list-container::-webkit-scrollbar-thumb,
+	.current-chat ol::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		background: rgb(255, 255, 255);
 	}
 }

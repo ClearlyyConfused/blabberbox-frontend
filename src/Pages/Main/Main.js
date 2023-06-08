@@ -4,16 +4,13 @@ import ChatCreateForm from './ChatCreateForm';
 import ChatJoinForm from './ChatJoinForm';
 import './Main.css';
 
-// uses userInfo from Main to get userChats from API when needed
-// updates userChats whenever user creates/joins a chat to get an updated list of chats
+// uses userInfo from App to get user's chats from API when needed
+// updates user's chats whenever user creates/joins a chat to get an updated list of chats
 function Main({ userInfo }) {
-	// userChats: useState for userInfos's chats from API
-	// initially undefined
+	// obtained from fetchUserChats() on userInfo
 	const [userChatsIDs, setUserChatsIDs] = useState();
 
-	// fetchUserChats()
-	// uses userInfo to call API and return user's chats IDs
-	// setUserChatsIDs the returned chats
+	// sets userChatIDs to fetched chat IDs
 	function fetchUserChats() {
 		const reqOptions = {
 			method: 'POST',
@@ -33,8 +30,7 @@ function Main({ userInfo }) {
 			});
 	}
 
-	// useEffect []: on initial render, call fetchUserChats
-	// to get initial sets of chats
+	// on initial render to get initial chats
 	useEffect(() => {
 		fetchUserChats();
 	}, []);
@@ -42,16 +38,13 @@ function Main({ userInfo }) {
 	return (
 		<main className="main">
 			<div className="chat-form-container">
-				{/*	createChatForm component to create chats */}
-				{/*takes in fetchUserChats to fetch new chats when new chats added*/}
+				{/*	creates chats */}
 				<ChatCreateForm userInfo={userInfo} fetchUserChats={fetchUserChats} />
-				{/*	joinChatForm component to join chats */}
-				{/* takes in fetchUserChats to fetch new chats when new chats added */}
+				{/*	join chats */}
 				<ChatJoinForm userInfo={userInfo} fetchUserChats={fetchUserChats} />
+				{/* both call fetchUserChats() after to get an updated list */}
 			</div>
-
-			{/*	chatDisplay component to display list of chats and current chat */}
-			{/* takes in userChatsIDs */}
+			{/*	chatDisplay component to display list of chats and current chat using userChatIDs*/}
 			<ChatDisplay userChatsIDs={userChatsIDs} userInfo={userInfo} />
 		</main>
 	);
