@@ -1,8 +1,15 @@
+import { useState } from 'react';
 import './Auth.css';
+import AuthLogic from './AuthLogic';
 
-function Register({ setDisplayedPage }) {
+function Register({ setDisplayedPage, setUserInfo }) {
+	// shows error message if cannot register
+	const [successFlag, setSuccessFlag] = useState(true)
+	const { login } = AuthLogic()
+
 	function handleSubmit(event) {
 		event.preventDefault();
+		setSuccessFlag(true)
 
 		const reqOptions = {
 			method: 'POST',
@@ -15,9 +22,19 @@ function Register({ setDisplayedPage }) {
 			}),
 		};
 
-		fetch('https://blabberbox-backend.vercel.app/createUser', reqOptions).then(
-			setDisplayedPage('Login')
-		);
+		fetch('https://blabberbox-backend.vercel.app/createUser', reqOptions).then((res) =>
+		res.json().then((data) => {
+			// if registration successful, login
+			if (data.success === true) {
+				const username = event.target.elements.username.value;
+				const password = event.target.elements.password.value
+				login(username, password, setUserInfo, setDisplayedPage, setSuccessFlag)
+			} else // else display error message
+			{
+				setSuccessFlag(false)
+			}
+		})
+	);
 	}
 
 	return (
@@ -35,6 +52,7 @@ function Register({ setDisplayedPage }) {
 				<button type="submit">Submit</button>
 			</form>
 			<button onClick={() => setDisplayedPage('Login')}>Back</button>
+			{successFlag ? "" : <p>An account using this username already exists</p>}
 		</main>
 	);
 }

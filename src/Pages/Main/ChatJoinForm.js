@@ -1,6 +1,13 @@
+import { useState } from "react";
+
 function ChatJoinForm({ userInfo, fetchUserChats }) {
+	// shows error message if cannot join chat
+	const [successFlag, setSuccessFlag] = useState(true)
+
 	function handleSubmit(event) {
 		event.preventDefault();
+		setSuccessFlag(true)
+
 		const reqOptions = {
 			method: 'POST',
 			headers: {
@@ -15,7 +22,15 @@ function ChatJoinForm({ userInfo, fetchUserChats }) {
 		// create a new chat then updates the userInfo
 		fetch('https://blabberbox-backend.vercel.app/joinChat', reqOptions).then((res) =>
 			res.json().then((data) => {
-				fetchUserChats();
+				if (data.success === true) {
+					fetchUserChats();
+					event.target.elements.chatName.value = '';
+					event.target.elements.password.value = '';
+				} else if (data.success === false) {
+					setSuccessFlag(false)
+				} else {
+					setSuccessFlag("already_in_chat")
+				}
 			})
 		);
 	}
@@ -34,6 +49,7 @@ function ChatJoinForm({ userInfo, fetchUserChats }) {
 				</div>
 				<button type="submit">Submit</button>
 			</form>
+			{successFlag === true ? "" : successFlag === false ? <p>Incorrect password</p> : <p>Already joined chat</p>}
 		</section>
 	);
 }

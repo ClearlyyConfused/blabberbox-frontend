@@ -1,6 +1,13 @@
+import { useState } from "react";
+
 function ChatCreateForm({ userInfo, fetchUserChats }) {
+	// shows error message if chat cannot be created
+	const [successFlag, setSuccessFlag] = useState(true)
+
 	function handleSubmit(event) {
 		event.preventDefault();
+		setSuccessFlag(true)
+
 		const reqOptions = {
 			method: 'POST',
 			headers: {
@@ -15,7 +22,13 @@ function ChatCreateForm({ userInfo, fetchUserChats }) {
 		// create a new chat then updates the userInfo
 		fetch('https://blabberbox-backend.vercel.app/createChat', reqOptions).then((res) =>
 			res.json().then((data) => {
-				fetchUserChats();
+				if (data.success === true) {
+					fetchUserChats();
+					event.target.elements.chatName.value = '';
+					event.target.elements.password.value = '';
+				} else {
+					setSuccessFlag(false)
+				}
 			})
 		);
 	}
@@ -34,6 +47,7 @@ function ChatCreateForm({ userInfo, fetchUserChats }) {
 				</div>
 				<button type="submit">Submit</button>
 			</form>
+			{successFlag ? <p></p> : <p>Chat name already exists</p>}
 		</section>
 	);
 }

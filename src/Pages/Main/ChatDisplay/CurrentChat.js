@@ -26,7 +26,7 @@ function CurrentChat({ currentChat, userInfo, sendMessage }) {
 			<section className="current-chat">
 				<h1>{currentChat.name}</h1>
 				<ol className="chatbox">
-					{/* column reverse on .chatbox makes scroll start at bottom, div makes it so messages aren't reversed*/}
+					{/* column reverse on .chatbox makes scroll start at bottom, div makes it so messages aren't reversed */}
 					<div>
 						{currentChat.messages.map((message) => {
 							return (

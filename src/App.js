@@ -19,7 +19,7 @@ function App() {
 
 	// for registering users
 	if (displayedPage === 'Register') {
-		return <Register setDisplayedPage={setDisplayedPage} />;
+		return <Register setDisplayedPage={setDisplayedPage} setUserInfo={setUserInfo} />;
 	}
 
 	// after logging in, displayedPage = Main, returns the actual chatting app

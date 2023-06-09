@@ -1,33 +1,17 @@
+import { useState } from 'react';
 import './Auth.css';
+import AuthLogic from './AuthLogic';
 
 function Login({ setUserInfo, setDisplayedPage }) {
+	// shows error message if cannot login
+	const [successFlag, setSuccessFlag] = useState(true)
+	const { login } = AuthLogic()
+
 	function handleSubmit(event) {
 		event.preventDefault();
-
-		const reqOptions = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				username: event.target.elements.username.value,
-				password: event.target.elements.password.value,
-			}),
-		};
-
-		fetch('https://blabberbox-backend.vercel.app/getUser', reqOptions)
-			.then((res) => res.json())
-			.then((user) => {
-				if (user.length !== 0) {
-					setUserInfo({
-						userID: user[0]._id,
-						username: user[0].username,
-						password: user[0].password,
-						chats: user[0].chats,
-					});
-					setDisplayedPage('Main');
-				}
-			});
+		const username = event.target.elements.username.value;
+		const password = event.target.elements.password.value
+		login(username, password, setUserInfo, setDisplayedPage, setSuccessFlag)
 	}
 
 	return (
@@ -51,6 +35,7 @@ function Login({ setUserInfo, setDisplayedPage }) {
 			>
 				Create an account
 			</button>
+			{successFlag ? "" : <p>Incorrect Password</p>}
 		</main>
 	);
 }
