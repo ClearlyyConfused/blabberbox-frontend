@@ -2,6 +2,7 @@
 // displays latest message from each chat
 function ChatList({ chatsInfo, setCurrentChat, userInfo, fetchUserChats }) {
 	// delete chat from user
+	/*
 	function handleSubmit(chatID) {
 		const reqOptions = {
 			method: 'POST',
@@ -20,6 +21,7 @@ function ChatList({ chatsInfo, setCurrentChat, userInfo, fetchUserChats }) {
 				fetchUserChats()
 			});
 	}
+	*/
 
 	return (
 		<section className="chat-list-container">
@@ -37,7 +39,7 @@ function ChatList({ chatsInfo, setCurrentChat, userInfo, fetchUserChats }) {
 								}
 							}}
 						>
-							<button onClick={(() => {handleSubmit(chat._id)})}>Leave Chat</button>
+							{/*<button onClick={(() => {handleSubmit(chat._id)})}>Leave Chat</button>*/}
 							<h3>{chat.name}</h3>
 							<p>
 								Latest:{' '}

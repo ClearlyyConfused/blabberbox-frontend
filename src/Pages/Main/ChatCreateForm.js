@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ChatCreateForm({ userInfo, fetchUserChats }) {
+function ChatCreateForm({ userInfo, fetchUserChats, setFormDisplay }) {
 	// shows error message if chat cannot be created
 	const [successFlag, setSuccessFlag] = useState(true)
 
@@ -26,6 +26,7 @@ function ChatCreateForm({ userInfo, fetchUserChats }) {
 					fetchUserChats();
 					event.target.elements.chatName.value = '';
 					event.target.elements.password.value = '';
+					setFormDisplay("")
 				} else {
 					setSuccessFlag(false)
 				}
@@ -35,7 +36,7 @@ function ChatCreateForm({ userInfo, fetchUserChats }) {
 
 	return (
 		<section className="chat-form">
-			<h1>Create Chat</h1>
+			<h1 onClick={(() => setFormDisplay(""))}>Create Chat</h1>
 			<form onSubmit={handleSubmit}>
 				<div>
 					<label htmlFor="chat-name">Chat Name</label>

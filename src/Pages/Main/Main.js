@@ -37,13 +37,14 @@ function Main({ userInfo }) {
 
 	return (
 		<main className="main">
+			{ /*
 			<div className="chat-form-container">
-				{/*	creates chats */}
+					creates chats 
 				<ChatCreateForm userInfo={userInfo} fetchUserChats={fetchUserChats} />
-				{/*	join chats */}
+				join chats
 				<ChatJoinForm userInfo={userInfo} fetchUserChats={fetchUserChats} />
-				{/* both call fetchUserChats() after to get an updated list */}
-			</div>
+				 both call fetchUserChats() after to get an updated list
+			</div> /* }
 			{/*	chatDisplay component to display list of chats and current chat using userChatIDs*/}
 			<ChatDisplay userChatsIDs={userChatsIDs} userInfo={userInfo} fetchUserChats={fetchUserChats} />
 		</main>
