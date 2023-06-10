@@ -5,7 +5,7 @@ import ChatDisplayLogic from './ChatDisplayLogic';
 import './ChatDisplay.css';
 
 // fetches and displays chat info using userChatsIDs
-function ChatDisplay({ userChatsIDs, userInfo }) {
+function ChatDisplay({ userChatsIDs, userInfo, fetchUserChats }) {
 	// array of info for each chat
 	const [chatsInfo, setChatsInfo] = useState([]);
 	// current chat to display
@@ -29,7 +29,7 @@ function ChatDisplay({ userChatsIDs, userInfo }) {
 	return (
 		<main className="chat-display">
 			{/* ChatList component displays each chat name and sets the current chat */}
-			<ChatList chatsInfo={chatsInfo} setCurrentChat={setCurrentChat} />
+			<ChatList chatsInfo={chatsInfo} setCurrentChat={setCurrentChat} userInfo={userInfo} fetchUserChats={fetchUserChats} />
 
 			{/* CurrentChat component displays the current chat info and allows to send messages to that chat */}
 			<CurrentChat

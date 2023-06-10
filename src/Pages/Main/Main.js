@@ -45,7 +45,7 @@ function Main({ userInfo }) {
 				{/* both call fetchUserChats() after to get an updated list */}
 			</div>
 			{/*	chatDisplay component to display list of chats and current chat using userChatIDs*/}
-			<ChatDisplay userChatsIDs={userChatsIDs} userInfo={userInfo} />
+			<ChatDisplay userChatsIDs={userChatsIDs} userInfo={userInfo} fetchUserChats={fetchUserChats} />
 		</main>
 	);
 }

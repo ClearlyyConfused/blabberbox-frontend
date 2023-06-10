@@ -1,6 +1,26 @@
 // list of chats being displayed
 // displays latest message from each chat
-function ChatList({ chatsInfo, setCurrentChat }) {
+function ChatList({ chatsInfo, setCurrentChat, userInfo, fetchUserChats }) {
+	// delete chat from user
+	function handleSubmit(chatID) {
+		const reqOptions = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				userID: userInfo.userID,
+				chatID: chatID,
+			}),
+		};
+		return fetch('https://blabberbox-backend.vercel.app/leaveChat', reqOptions)
+			.then((res) => res.json())
+			.then((data) => {
+				// fetch new list of chat
+				fetchUserChats()
+			});
+	}
+
 	return (
 		<section className="chat-list-container">
 			<ol className="chat-list">
@@ -17,6 +37,7 @@ function ChatList({ chatsInfo, setCurrentChat }) {
 								}
 							}}
 						>
+							<button onClick={(() => {handleSubmit(chat._id)})}>Leave Chat</button>
 							<h3>{chat.name}</h3>
 							<p>
 								Latest:{' '}
