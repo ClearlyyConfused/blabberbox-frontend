@@ -1,51 +1,159 @@
-.auth {
-	display: flex;
-	flex: 1;
-	flex-direction: column;
-	gap: 10px;
-	border-radius: 15px;
-	background-color: black;
-	padding: 20px;
-	max-width: 400px;
-	color: white;
-	border: 1.5px solid white;
+@use '../../variable';
+$mobile-layout-width: 900px;
+$auth-section-width: 60%;
 
-	h1 {
-		margin: 0px;
-		font-size: 35px;
+.register,
+.login {
+	display: flex;
+	justify-content: center;
+	margin-left: auto;
+	width: 100%;
+	height: fit-content;
+
+	@media (max-width: $mobile-layout-width) {
+		flex-direction: column;
 	}
-	form {
+
+	.logo-display {
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
-		label {
-			font-size: 25px;
+		justify-content: center;
+		align-items: center;
+		box-sizing: border-box;
+		background-color: variable.$primary-color;
+		padding: 60px 0px;
+		width: 100%;
+		min-height: 100vh;
+
+		// so no displacement before image loaded
+		.img-container {
+			width: 230px;
+			height: 230px;
 		}
-		div {
+		img {
+			filter: invert(1);
+			width: 230px;
+			height: 230px;
+			&:hover {
+				cursor: pointer;
+			}
+		}
+		h1 {
+			margin: 0;
+			margin-top: 20px;
+			color: white;
+			font-size: 54px;
+		}
+		> img:last-child {
+			display: none;
+			height: 150px;
+			object-fit: cover;
+
+			@media (max-width: $mobile-layout-width) {
+				display: block;
+			}
+		}
+	}
+
+	.auth {
+		display: flex;
+		position: relative;
+		right: 0px;
+		flex: 1;
+		flex-direction: column;
+		justify-content: center;
+		gap: 30px;
+		animation: slide-in-right 1s;
+		box-sizing: border-box;
+		background-color: variable.$secondary-color;
+		padding: 60px;
+		min-width: $auth-section-width; // amount of space form takes up compared to left side
+		min-height: 100vh;
+		color: white;
+
+		@media (max-width: $mobile-layout-width) {
+			animation: slide-in-right-mobile 1s;
+		}
+		h1 {
+			margin: 0px;
+			font-weight: 400;
+			font-size: 35px;
+		}
+		form {
 			display: flex;
 			flex-direction: column;
+			gap: 10px;
+
+			// label/input pair
+			div {
+				display: flex;
+				flex-direction: column;
+			}
+			label {
+				font-weight: 700;
+				font-size: 16px;
+			}
+			input {
+				align-self: center;
+				outline: none;
+				border: none;
+				border-radius: 3px;
+				background-color: transparent;
+				background-color: white;
+				padding: 6px;
+				width: 100%;
+				height: 30px;
+				color: black;
+			}
+
+			// create account/back button
+			button {
+				margin-left: auto;
+				border: none;
+				background-color: transparent;
+				width: fit-content;
+				color: white;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+			// submit button
+			button:last-child {
+				margin-top: 30px;
+				border: none;
+				border-radius: 5px;
+				background-color: variable.$tertiary-color;
+				width: 100%;
+				height: 40px;
+				font-weight: 700;
+			}
 		}
-		input {
-			align-self: center;
-			width: 100%;
-			height: 30px;
-			background-color: transparent;
-			border: 1.5px solid white;
-			color: white;
+
+		button:hover {
+			cursor: pointer;
+		}
+		// error message
+		p {
+			margin: 0;
+			padding-top: 5px;
 		}
 	}
-	button {
-		width: fit-content;
-		background-color: transparent;
-		color: white;
-		border: 1.5px solid white;
-		border-radius: 0px;
+}
+
+@keyframes slide-in-right {
+	0% {
+		right: -$auth-section-width; // same as how much
 	}
-	button:hover {
-		cursor: pointer;
+	100% {
+		right: 0px;
 	}
-	p {
-		margin: 0;
-		padding-top: 5px;
+}
+
+@keyframes slide-in-right-mobile {
+	0% {
+		right: -100%;
+	}
+	100% {
+		right: 0px;
 	}
 }

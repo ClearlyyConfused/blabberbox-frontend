@@ -2,7 +2,7 @@
 // displays latest message from each chat
 function ChatList({ chatsInfo, setCurrentChat, userInfo, fetchUserChats }) {
 	// delete chat from user
-	/*
+	/* 
 	function handleSubmit(chatID) {
 		const reqOptions = {
 			method: 'POST',
@@ -18,7 +18,7 @@ function ChatList({ chatsInfo, setCurrentChat, userInfo, fetchUserChats }) {
 			.then((res) => res.json())
 			.then((data) => {
 				// fetch new list of chat
-				fetchUserChats()
+				fetchUserChats();
 			});
 	}
 	*/

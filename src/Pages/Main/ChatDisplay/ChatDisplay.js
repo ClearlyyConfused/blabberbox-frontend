@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import ChatSidebar from './ChatSidebar/ChatSidebar';
+import ChatSidebar from '../ChatSidebar/ChatSidebar';
 import CurrentChat from './CurrentChat';
 import ChatDisplayLogic from './ChatDisplayLogic';
 import './ChatDisplay.css';
@@ -29,7 +29,12 @@ function ChatDisplay({ userChatsIDs, userInfo, fetchUserChats }) {
 	return (
 		<main className="chat-display">
 			{/* ChatList component displays each chat name and sets the current chat */}
-			<ChatSidebar chatsInfo={chatsInfo} setCurrentChat={setCurrentChat} userInfo={userInfo} fetchUserChats={fetchUserChats} />
+			<ChatSidebar
+				chatsInfo={chatsInfo}
+				setCurrentChat={setCurrentChat}
+				userInfo={userInfo}
+				fetchUserChats={fetchUserChats}
+			/>
 
 			{/* CurrentChat component displays the current chat info and allows to send messages to that chat */}
 			<CurrentChat
