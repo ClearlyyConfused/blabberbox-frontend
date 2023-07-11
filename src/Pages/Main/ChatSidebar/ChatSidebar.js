@@ -1,5 +1,6 @@
 import ChatList from './ChatList';
 import AddChat from './AddChat';
+import './ChatSidebar.css';
 
 function ChatSidebar({ chatsInfo, setCurrentChat, userInfo, fetchUserChats }) {
 	return (

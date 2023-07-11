@@ -65,7 +65,9 @@ function Register({ setDisplayedPage, setUserInfo }) {
 						<label htmlFor="password">PASSWORD</label>
 						<input id="password" type="text" />
 					</div>
-					<button onClick={() => setDisplayedPage('Login')}>Back</button>
+					<button type="button" onClick={() => setDisplayedPage('Login')}>
+						Back
+					</button>
 					<button type="submit">SUBMIT</button>
 				</form>
 				{successFlag ? '' : <p>An account using this username already exists</p>}

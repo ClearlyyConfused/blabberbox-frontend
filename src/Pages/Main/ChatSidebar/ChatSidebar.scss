@@ -1,0 +1,103 @@
+@use '../../../variable';
+
+.chat-sidebar {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	box-sizing: border-box;
+	background-color: variable.$secondary-color;
+	padding: 10px 20px;
+	width: 30%; // width of chat side-bar
+	height: 750px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	direction: rtl;
+
+	// create/join chat buttons
+	.add-chat {
+		display: flex;
+		position: sticky;
+		top: 0px;
+		flex-direction: column;
+
+		h2 {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: 0;
+			border-bottom: 1.5px solid white;
+			height: 80px;
+			font-size: 30px;
+			text-align: center;
+		}
+		h2:hover {
+			cursor: pointer;
+		}
+
+		.add-chat-buttons {
+			overflow-y: hidden;
+		}
+
+		button:hover {
+			cursor: pointer;
+			background-color: rgba(255, 255, 255, 0.1);
+		}
+		button {
+			border: 0px;
+			border-bottom: 1.5px solid white;
+			border-radius: 0px;
+			background-color: transparent;
+			width: 100%;
+			height: 80px;
+			color: white;
+		}
+	}
+
+	@media (max-width: 769px) {
+		width: 100%;
+		min-width: 0px;
+	}
+}
+
+.chat-list-container {
+	.chat-list {
+		margin: 0;
+		border-radius: 20px;
+		background-color: variable.$primary-color;
+		padding: 10px;
+		list-style: none;
+		direction: ltr;
+
+		// chats listed
+		.chat:hover {
+			cursor: pointer;
+			background-color: rgba(255, 255, 255, 0.1);
+		}
+		.chat:last-child {
+			border-bottom: none !important;
+		}
+		.chat {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+			padding: 10px;
+			height: 80px;
+
+			// name of chat
+			h3 {
+				margin: 0;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			// latest chat message
+			p {
+				margin: 0;
+				overflow: hidden;
+				overflow-x: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+	}
+}

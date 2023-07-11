@@ -43,6 +43,7 @@ function Login({ setUserInfo, setDisplayedPage }) {
 						<input id="password" type="text" />
 					</div>
 					<button
+						type="button"
 						onClick={() => {
 							setDisplayedPage('Register');
 						}}
