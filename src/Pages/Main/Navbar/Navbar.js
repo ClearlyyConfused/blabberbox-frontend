@@ -15,6 +15,7 @@ function Navbar({ userInfo, setUserInfo, setDisplayedPage }) {
 						onClick={() => {
 							setDisplayedPage('Login');
 							setUserInfo();
+							localStorage.clear();
 						}}
 					>
 						Logout

@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Login from './Pages/Auth/Login';
 import Register from './Pages/Auth/Register';
 import Main from './Pages/Main/Main';
@@ -11,6 +11,13 @@ function App() {
 	const [displayedPage, setDisplayedPage] = useState('Login');
 	// obtained from login component
 	const [userInfo, setUserInfo] = useState();
+
+	useEffect(() => {
+		if (localStorage.userInfo !== undefined) {
+			setUserInfo(JSON.parse(localStorage.getItem('userInfo')));
+			setDisplayedPage('Main');
+		}
+	}, []);
 
 	// for user login and sets userInfo
 	if (displayedPage === 'Login') {
