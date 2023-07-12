@@ -3,9 +3,11 @@
 .chat-display {
 	display: flex;
 	flex: 1;
+	gap: 20px;
+	padding: 0px 20px;
 
 	// width to switch to mobile layout
-	@media (max-width: 769px) {
+	@media (max-width: 800px) {
 		flex-direction: column;
 	}
 
@@ -15,7 +17,7 @@
 		flex-direction: column;
 		align-items: center;
 		box-sizing: border-box;
-		border-left: none; // to not overlap with chat list border
+		border-radius: 20px;
 		background-color: variable.$primary-color;
 		padding: 10px 20px;
 		width: 100%;
@@ -28,6 +30,7 @@
 			padding: 10px 0px;
 			width: 100%;
 			min-height: 80px;
+			font-weight: 800;
 			font-size: 40px;
 			text-align: center;
 		}
@@ -82,6 +85,7 @@
 				}
 				h4 {
 					margin: 0;
+					font-weight: 400;
 					font-size: 32px;
 				}
 				.message-date {
@@ -92,6 +96,7 @@
 				p {
 					margin: 0;
 					overflow: hidden;
+					font-weight: 300;
 					text-overflow: ellipsis;
 				}
 			}
@@ -103,7 +108,6 @@
 			border-bottom-right-radius: 20px;
 			border-bottom-left-radius: 20px;
 			background-color: variable.$primary-color;
-			padding: 15px;
 			width: 90%;
 			min-height: 80px;
 
@@ -139,7 +143,9 @@
 					justify-content: center;
 					align-items: center;
 					border: 1.5px solid white;
-					min-width: 80px;
+					min-width: 60px;
+					font-weight: 300;
+					font-size: 12px;
 					text-align: center;
 				}
 				.image-input:hover {
@@ -153,6 +159,7 @@
 					background-color: transparent;
 					width: 100px;
 					color: white;
+					font-weight: 300;
 				}
 				button:hover {
 					cursor: pointer;

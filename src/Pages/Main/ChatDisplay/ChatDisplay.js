@@ -5,6 +5,7 @@ import ChatDisplayLogic from './ChatDisplayLogic';
 import './ChatDisplay.css';
 
 // fetches and displays chat info using userChatsIDs
+// also displays chat sidebar
 function ChatDisplay({ userChatsIDs, userInfo, fetchUserChats }) {
 	// array of info for each chat
 	const [chatsInfo, setChatsInfo] = useState([]);
@@ -12,6 +13,13 @@ function ChatDisplay({ userChatsIDs, userInfo, fetchUserChats }) {
 	const [currentChat, setCurrentChat] = useState();
 	// get logic for all components
 	const { updateChatsInfo, sendMessage, getCurrentChatInfo } = ChatDisplayLogic(userChatsIDs, setChatsInfo);
+
+	// display first chat on first load
+	useEffect(() => {
+		if (currentChat === undefined && userChatsIDs !== undefined) {
+			setCurrentChat(userChatsIDs[0]);
+		}
+	}, [currentChat, userChatsIDs]);
 
 	// whenever user's chat IDs change, set an interval to fetch info from all the chatIDs
 	useEffect(() => {

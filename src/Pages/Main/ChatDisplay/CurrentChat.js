@@ -50,11 +50,13 @@ function CurrentChat({ currentChat, userInfo, sendMessage }) {
 				</ol>
 				<section className="message-form">
 					<form onSubmit={handleSubmit}>
-						<input id="message" type="text" />
-						<label className="image-input" htmlFor="image">
-							Add Img
-						</label>
-						<input type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
+						<input placeholder="Send a message" id="message" type="text" />
+						<div>
+							<label className="image-input" htmlFor="image">
+								Add Img
+							</label>
+							<input type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
+						</div>
 						<button type="submit">Send</button>
 					</form>
 				</section>

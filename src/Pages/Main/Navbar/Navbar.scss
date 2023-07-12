@@ -1,0 +1,77 @@
+@use '../../../variable';
+
+nav {
+	display: flex;
+	background-color: variable.$secondary-color;
+	padding: 15px 20px;
+	height: 100px;
+
+	@media (max-width: 600px) {
+		flex-direction: column;
+		gap: 25px;
+		height: fit-content;
+	}
+
+	.logo {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 20px;
+		width: 25%;
+		min-width: 300px;
+		height: 100%;
+
+		@media (max-width: 800px) {
+			justify-content: start;
+			width: fit-content;
+			min-width: 0px;
+		}
+
+		h1 {
+			font-weight: 400;
+		}
+		img {
+			filter: invert(1);
+			width: auto;
+			height: 85%;
+			@media (max-width: 600px) {
+				width: auto;
+				height: 60px;
+			}
+		}
+	}
+
+	.user-info {
+		display: flex;
+		gap: 20px;
+		width: 100%;
+		min-width: 275px;
+
+		div {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			margin-left: auto;
+
+			h2 {
+				margin: 0;
+				font-weight: 300;
+			}
+			p {
+				margin: 0;
+				color: rgba(255, 255, 255, 0.8);
+				font-weight: 300;
+				text-align: end;
+			}
+		}
+		img {
+			border-radius: 30px;
+		}
+		@media (max-width: 600px) {
+			img {
+				width: auto;
+				height: 60px;
+			}
+		}
+	}
+}

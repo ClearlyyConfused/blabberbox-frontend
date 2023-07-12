@@ -1,4 +1,5 @@
 @use './variable';
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300;400;700;800&display=swap');
 
 html,
 body {
@@ -14,12 +15,11 @@ body {
 	margin: 0;
 	background-color: black;
 	overflow-x: hidden;
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-		'Open Sans', 'Helvetica Neue', sans-serif;
+	font-family: 'Merriweather Sans', sans-serif;
 }
 
 #root {
-	background-color: variable.$primary-color;
+	background-color: variable.$secondary-color;
 	width: 100%;
 }
 

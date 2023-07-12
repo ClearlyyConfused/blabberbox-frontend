@@ -6,8 +6,9 @@
 	gap: 30px;
 	box-sizing: border-box;
 	background-color: variable.$secondary-color;
-	padding: 10px 20px;
-	width: 30%; // width of chat side-bar
+	padding: 10px 00px;
+	min-width: 300px;
+	max-width: 25%; // width of chat side-bar
 	height: 750px;
 	overflow-x: hidden;
 	overflow-y: scroll;
@@ -27,6 +28,7 @@
 			margin: 0;
 			border-bottom: 1.5px solid white;
 			height: 80px;
+			font-weight: 800;
 			font-size: 30px;
 			text-align: center;
 		}
@@ -53,9 +55,10 @@
 		}
 	}
 
-	@media (max-width: 769px) {
+	@media (max-width: 800px) {
 		width: 100%;
 		min-width: 0px;
+		max-width: none;
 	}
 }
 
@@ -88,6 +91,7 @@
 			h3 {
 				margin: 0;
 				overflow: hidden;
+				font-weight: 400;
 				text-overflow: ellipsis;
 			}
 			// latest chat message
@@ -95,6 +99,7 @@
 				margin: 0;
 				overflow: hidden;
 				overflow-x: hidden;
+				font-weight: 300;
 				text-overflow: ellipsis;
 				white-space: nowrap;
 			}
