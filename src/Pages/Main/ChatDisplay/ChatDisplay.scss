@@ -169,12 +169,10 @@
 		}
 	}
 
-	// scrollbar for chat list and current chat
-	.chat-sidebar::-webkit-scrollbar,
+	// scrollbar for current chat
 	.chatbox::-webkit-scrollbar {
 		width: 2px;
 	}
-	.chat-sidebar-container::-webkit-scrollbar-thumb,
 	.chatbox::-webkit-scrollbar-thumb {
 		border-radius: 10px;
 		background: rgb(255, 255, 255);
