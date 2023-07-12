@@ -5,7 +5,7 @@ import './Main.css';
 
 // uses userInfo from App to get user's chats from API when needed
 // updates user's chats whenever user creates/joins a chat to get an updated list of chats
-function Main({ userInfo }) {
+function Main({ userInfo, setUserInfo, setDisplayedPage }) {
 	// obtained from fetchUserChats() on userInfo
 	const [userChatsIDs, setUserChatsIDs] = useState();
 
@@ -36,7 +36,7 @@ function Main({ userInfo }) {
 
 	return (
 		<main className="main">
-			<Navbar userInfo={userInfo} />
+			<Navbar userInfo={userInfo} setUserInfo={setUserInfo} setDisplayedPage={setDisplayedPage} />
 			<ChatDisplay userChatsIDs={userChatsIDs} userInfo={userInfo} fetchUserChats={fetchUserChats} />
 		</main>
 	);

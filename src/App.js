@@ -24,7 +24,7 @@ function App() {
 
 	// after logging in, displayedPage = Main, returns the actual chatting app
 	if (displayedPage === 'Main') {
-		return <Main userInfo={userInfo} />;
+		return <Main userInfo={userInfo} setUserInfo={setUserInfo} setDisplayedPage={setDisplayedPage} />;
 	}
 }
 

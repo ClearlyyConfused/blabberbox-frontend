@@ -1,7 +1,7 @@
 import './Navbar.css';
 import logo from '../../../images/logo.svg';
 
-function Navbar({ userInfo }) {
+function Navbar({ userInfo, setUserInfo, setDisplayedPage }) {
 	return (
 		<nav>
 			<div className="logo">
@@ -11,7 +11,14 @@ function Navbar({ userInfo }) {
 			<div className="user-info">
 				<div>
 					<h2>Welcome {userInfo.username}</h2>
-					<p>Logout</p>
+					<p
+						onClick={() => {
+							setDisplayedPage('Login');
+							setUserInfo();
+						}}
+					>
+						Logout
+					</p>
 				</div>
 				<img src={logo} alt="" />
 			</div>
