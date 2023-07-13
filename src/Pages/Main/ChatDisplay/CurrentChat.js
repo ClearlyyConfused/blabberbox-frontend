@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import CurrentChatInfo from './CurrentChatInfo';
-import downChevron from '../../../images/chevron-down-outline-svgrepo-com.svg';
+import downChevron from '../../../images/chevron-down-icon.svg';
+import back from '../../../images/back-arrow-svgrepo-com.svg';
 
 // is the current chat being displayed on the screen, user can send messages to that chat
 function CurrentChat({ currentChat, userInfo, sendMessage, fetchUserChats, setCurrentChat }) {
@@ -100,8 +101,8 @@ function CurrentChat({ currentChat, userInfo, sendMessage, fetchUserChats, setCu
 						}
 					}}
 				>
+					<img src={back} alt="" />
 					<h1>{currentChat.name} info</h1>
-					<img src={downChevron} alt="" />
 				</div>
 				<CurrentChatInfo
 					currentChat={currentChat}

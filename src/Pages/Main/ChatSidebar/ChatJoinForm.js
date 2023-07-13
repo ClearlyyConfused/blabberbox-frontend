@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-function ChatJoinForm({ userInfo, fetchUserChats, setFormDisplay }) {
+function ChatJoinForm({ userInfo, fetchUserChats }) {
 	// shows error message if cannot join chat
-	const [successFlag, setSuccessFlag] = useState(true)
+	const [successFlag, setSuccessFlag] = useState(true);
 
 	function handleSubmit(event) {
 		event.preventDefault();
-		setSuccessFlag(true)
+		setSuccessFlag(true);
 
 		const reqOptions = {
 			method: 'POST',
@@ -26,11 +26,10 @@ function ChatJoinForm({ userInfo, fetchUserChats, setFormDisplay }) {
 					fetchUserChats();
 					event.target.elements.chatName.value = '';
 					event.target.elements.password.value = '';
-					setFormDisplay("")
 				} else if (data.success === false) {
-					setSuccessFlag(false)
+					setSuccessFlag(false);
 				} else {
-					setSuccessFlag("already_in_chat")
+					setSuccessFlag('already_in_chat');
 				}
 			})
 		);
@@ -38,7 +37,7 @@ function ChatJoinForm({ userInfo, fetchUserChats, setFormDisplay }) {
 
 	return (
 		<section className="chat-form">
-			<h1 onClick={(() => setFormDisplay(""))}>Join Chat</h1>
+			<h1>Join Chat</h1>
 			<form onSubmit={handleSubmit}>
 				<div>
 					<label htmlFor="chat-name">Chat Name</label>
@@ -50,7 +49,13 @@ function ChatJoinForm({ userInfo, fetchUserChats, setFormDisplay }) {
 				</div>
 				<button type="submit">Submit</button>
 			</form>
-			{successFlag === true ? <p></p> : successFlag === false ? <p>Incorrect password</p> : <p>Already joined chat</p>}
+			{successFlag === true ? (
+				<p></p>
+			) : successFlag === false ? (
+				<p>Incorrect password</p>
+			) : (
+				<p>Already joined chat</p>
+			)}
 		</section>
 	);
 }

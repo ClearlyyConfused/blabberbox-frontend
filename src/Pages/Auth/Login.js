@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './Auth.css';
 import AuthLogic from './AuthLogic';
 import logo from '../../images/logo.svg';
-import chevron from '../../images/chevron-down-outline-svgrepo-com.svg';
+import chevron from '../../images/chevron-down-icon.svg';
 
 function Login({ setUserInfo, setDisplayedPage }) {
 	// shows error message if cannot login
