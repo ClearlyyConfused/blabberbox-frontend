@@ -14,13 +14,6 @@ function ChatDisplay({ userChatsIDs, userInfo, fetchUserChats }) {
 	// get logic for all components
 	const { updateChatsInfo, sendMessage, getCurrentChatInfo } = ChatDisplayLogic(userChatsIDs, setChatsInfo);
 
-	// display first chat on first load
-	useEffect(() => {
-		if (currentChat === undefined && userChatsIDs !== undefined) {
-			setCurrentChat(userChatsIDs[0]);
-		}
-	}, [currentChat, userChatsIDs]);
-
 	// whenever user's chat IDs change, set an interval to fetch info from all the chatIDs
 	useEffect(() => {
 		if (userChatsIDs !== undefined) {
@@ -49,6 +42,8 @@ function ChatDisplay({ userChatsIDs, userInfo, fetchUserChats }) {
 				currentChat={getCurrentChatInfo(chatsInfo, currentChat)}
 				userInfo={userInfo}
 				sendMessage={sendMessage}
+				fetchUserChats={fetchUserChats}
+				setCurrentChat={setCurrentChat}
 			/>
 		</main>
 	);

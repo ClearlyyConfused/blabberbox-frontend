@@ -1,7 +1,14 @@
+import { useEffect, useState } from 'react';
+import CurrentChatInfo from './CurrentChatInfo';
+import downChevron from '../../../images/chevron-down-outline-svgrepo-com.svg';
+
 // is the current chat being displayed on the screen, user can send messages to that chat
-function CurrentChat({ currentChat, userInfo, sendMessage }) {
-	// submit button that takes info from form to input into sendMessage
-	function handleSubmit(event) {
+function CurrentChat({ currentChat, userInfo, sendMessage, fetchUserChats, setCurrentChat }) {
+	const [display, setDisplay] = useState('chat');
+	const [x, setX] = useState(); // for resetting chat after switching chats
+
+	// calls sendMessage with info from form
+	function handleMessage(event) {
 		event.preventDefault();
 		const message = event.target.elements.message.value;
 		// if message has an image, convert it then call sendMessage with result
@@ -21,10 +28,29 @@ function CurrentChat({ currentChat, userInfo, sendMessage }) {
 		}
 	}
 
-	if (currentChat !== undefined) {
+	// sets display back to chat after changing chats (if, for example, changing while displaying chat info)
+	useEffect(() => {
+		if (JSON.stringify(currentChat) !== JSON.stringify(x)) {
+			setX(currentChat);
+			setDisplay('chat');
+		}
+	}, [currentChat]);
+
+	if (currentChat !== undefined && display === 'chat') {
 		return (
 			<section className="current-chat">
-				<h1>{currentChat.name}</h1>
+				<div
+					onClick={() => {
+						if (display === 'chat') {
+							setDisplay('chat-info');
+						} else if (display === 'chat-info') {
+							setDisplay('chat');
+						}
+					}}
+				>
+					<h1>{currentChat.name}</h1>
+					<img src={downChevron} alt="" />
+				</div>
 				<ol className="chatbox">
 					{/* column reverse on .chatbox makes scroll start at bottom, div makes it so messages aren't reversed */}
 					<div>
@@ -49,7 +75,7 @@ function CurrentChat({ currentChat, userInfo, sendMessage }) {
 					</div>
 				</ol>
 				<section className="message-form">
-					<form onSubmit={handleSubmit}>
+					<form onSubmit={handleMessage}>
 						<input placeholder="Send a message" id="message" type="text" />
 						<div>
 							<label className="image-input" htmlFor="image">
@@ -60,6 +86,29 @@ function CurrentChat({ currentChat, userInfo, sendMessage }) {
 						<button type="submit">Send</button>
 					</form>
 				</section>
+			</section>
+		);
+	} else if (currentChat !== undefined && display === 'chat-info') {
+		return (
+			<section className="current-chat">
+				<div
+					onClick={() => {
+						if (display === 'chat') {
+							setDisplay('chat-info');
+						} else if (display === 'chat-info') {
+							setDisplay('chat');
+						}
+					}}
+				>
+					<h1>{currentChat.name} info</h1>
+					<img src={downChevron} alt="" />
+				</div>
+				<CurrentChatInfo
+					currentChat={currentChat}
+					userInfo={userInfo}
+					fetchUserChats={fetchUserChats}
+					setCurrentChat={setCurrentChat}
+				/>
 			</section>
 		);
 	}

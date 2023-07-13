@@ -63,9 +63,10 @@ nav {
 			// logout
 			p {
 				margin: 0;
+				margin-left: auto;
+				width: fit-content;
 				color: rgba(255, 255, 255, 0.8);
 				font-weight: 300;
-				text-align: end;
 				&:hover {
 					cursor: pointer;
 					text-decoration: underline;

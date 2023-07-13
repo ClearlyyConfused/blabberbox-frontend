@@ -6,11 +6,10 @@
 	gap: 30px;
 	box-sizing: border-box;
 	background-color: variable.$secondary-color;
-	min-width: 300px;
-	max-width: 25%; // width of chat side-bar
+	min-width: max(300px, 25%);
 	height: 750px;
 	overflow-x: hidden;
-	direction: rtl;
+	direction: rtl; // scrollbar on left
 
 	// create/join chat buttons
 	.add-chat {
@@ -19,19 +18,33 @@
 		top: 0px;
 		flex-direction: column;
 
-		h2 {
+		.add-chat-header {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			margin: 0;
+			gap: 10px;
+			box-sizing: border-box;
+			margin-top: 10px;
 			border-bottom: 1.5px solid white;
 			height: 80px;
-			font-weight: 800;
-			font-size: 30px;
-			text-align: center;
-		}
-		h2:hover {
-			cursor: pointer;
+
+			h2 {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin: 0;
+				font-weight: 800;
+				font-size: 30px;
+				text-align: center;
+			}
+			img {
+				filter: invert(1);
+				width: 25px;
+				height: 25px;
+			}
+			&:hover {
+				cursor: pointer;
+			}
 		}
 
 		.add-chat-buttons {
@@ -53,6 +66,85 @@
 		}
 	}
 
+	.chat-form-container {
+		display: flex;
+		gap: 30px;
+		@media (max-width: 500px) {
+			flex-direction: column;
+			align-self: center;
+		}
+	}
+	.chat-form {
+		display: flex;
+		position: sticky;
+		top: 0px;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+		border-bottom: 1.5px solid white;
+		background-color: black;
+		direction: ltr;
+
+		h1 {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: 0;
+			border-bottom: 1.5px solid white;
+			width: 100%;
+			height: 80px;
+			font-size: 30px;
+		}
+		h1:hover {
+			cursor: pointer;
+		}
+		form {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+
+			// groups input name and input bar
+			div {
+				display: flex;
+				flex-direction: column;
+				gap: 5px;
+				max-width: 175px;
+			}
+
+			input {
+				align-self: center;
+				border: 1.5px solid white;
+				background-color: transparent;
+				width: 100%;
+				height: 30px;
+				color: white;
+			}
+
+			label,
+			input {
+				font-size: 20px;
+			}
+		}
+		button {
+			border: 1.5px solid white;
+			border-radius: 0px;
+			background-color: transparent;
+			width: fit-content;
+			width: 100%;
+			color: white;
+		}
+		button:hover {
+			cursor: pointer;
+		}
+		// error message
+		p {
+			margin: 0;
+			padding-bottom: 10px;
+			text-align: center;
+		}
+	}
+
 	@media (max-width: 800px) {
 		width: 100%;
 		min-width: 0px;
@@ -67,7 +159,7 @@
 		border-radius: 20px;
 		background-color: variable.$primary-color;
 		padding: 10px;
-		height: (750px - 80px - 30px); // height of current chat - add chat - gap
+		height: (750px - 80px - 30px - 10px); // height of current chat - add chat - gap - padding
 		overflow-y: scroll;
 		list-style: none;
 		direction: ltr;
