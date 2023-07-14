@@ -7,6 +7,42 @@ import back from '../../../images/back-arrow-svgrepo-com.svg';
 function CurrentChat({ currentChat, userInfo, sendMessage, fetchUserChats, setCurrentChat }) {
 	const [display, setDisplay] = useState('chat');
 	const [x, setX] = useState(); // for resetting chat after switching chats
+	const [userProfileImages, setUserProfileImages] = useState();
+
+	console.log(userProfileImages);
+
+	async function fetchProfileImage(username) {
+		const reqOptions = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				username: username,
+			}),
+		};
+		return fetch('https://blabberbox-backend.vercel.app/getProfileImage', reqOptions)
+			.then((res) => res.json())
+			.then((data) => {
+				return [username, data.userProfileImage];
+			});
+	}
+
+	async function fetchAllProfileImages(users) {
+		let array = [];
+		for (const username of users) {
+			const data = await fetchProfileImage(username);
+			// waits until fetchAPI for that param is finished before continuing
+			array.push(data);
+		}
+		setUserProfileImages(Object.fromEntries(array));
+	}
+
+	useEffect(() => {
+		if (currentChat !== undefined) {
+			fetchAllProfileImages(currentChat.users);
+		}
+	}, [currentChat]);
 
 	// calls sendMessage with info from form
 	function handleMessage(event) {
@@ -60,6 +96,11 @@ function CurrentChat({ currentChat, userInfo, sendMessage, fetchUserChats, setCu
 								<li className={message.user === userInfo.username ? 'user-message message' : 'message'}>
 									<img src={message.image} alt="" srcset="" />
 									<h4>{message.user} </h4>
+									<img
+										src={userProfileImages !== undefined ? userProfileImages[message.user] : ''}
+										alt=""
+										srcset=""
+									/>
 									<p>{message.message}</p>
 									<p className="message-date">
 										{new Date(message.timeSent).toLocaleTimeString('en-US', {

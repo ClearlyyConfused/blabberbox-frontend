@@ -21,6 +21,7 @@ function AuthLogic() {
 						username: user[0].username,
 						password: user[0].password,
 						chats: user[0].chats,
+						image: user[0].image,
 					});
 
 					// store user info in local storage
@@ -31,6 +32,7 @@ function AuthLogic() {
 							username: user[0].username,
 							password: user[0].password,
 							chats: user[0].chats,
+							image: user[0].image,
 						})
 					);
 

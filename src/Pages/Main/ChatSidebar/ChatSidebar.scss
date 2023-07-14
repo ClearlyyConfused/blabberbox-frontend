@@ -6,7 +6,7 @@
 	gap: 30px;
 	box-sizing: border-box;
 	background-color: variable.$secondary-color;
-	min-width: max(300px, 25%);
+	width: max(300px, 25%);
 	height: 750px;
 	overflow-x: hidden;
 	direction: rtl; // scrollbar on left
@@ -168,9 +168,7 @@
 			height: 80px;
 			font-size: 30px;
 		}
-		h1:hover {
-			cursor: pointer;
-		}
+
 		form {
 			display: flex;
 			flex-direction: column;

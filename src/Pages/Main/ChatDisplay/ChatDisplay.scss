@@ -20,8 +20,12 @@
 		border-radius: 20px;
 		background-color: variable.$primary-color;
 		padding: 10px 20px;
-		width: 100%;
+		width: 75%;
 		height: 750px;
+
+		@media (max-width: 800px) {
+			width: 100%;
+		}
 
 		// current chat header
 		> div {
