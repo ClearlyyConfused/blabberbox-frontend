@@ -1,10 +1,12 @@
 import './Navbar.css';
 import logo from '../../../images/logo.svg';
+import defaultPFP from '../../../images/Default_pfp.svg';
 
 function Navbar({ userInfo, setUserInfo, setDisplayedPage }) {
 	function handleMessage(event) {
 		event.preventDefault();
 		let reader = new FileReader();
+
 		reader.readAsDataURL(event.target.elements.image.files[0]);
 		reader.onloadend = () => {
 			const image = reader.result;
@@ -82,9 +84,9 @@ function Navbar({ userInfo, setUserInfo, setDisplayedPage }) {
 				</div>
 				<form onSubmit={handleMessage}>
 					<input type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
-					<button type="submit">Send</button>
+					<button type="submit">Upload PFP</button>
 				</form>
-				<img src={userInfo.image} alt="" />
+				<img src={userInfo.image ? userInfo.image : defaultPFP} alt="" />
 			</div>
 		</nav>
 	);

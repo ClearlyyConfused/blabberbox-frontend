@@ -66,29 +66,41 @@
 			border-top-right-radius: 20px;
 			border-top-left-radius: 20px;
 			padding: 15px;
+			padding-top: 30px;
 			width: 90%;
 			height: 90%;
 			overflow-y: scroll;
 			list-style: none;
 
 			// div holding all messages
-			> div {
+			.messages-container {
 				display: flex;
 				flex-direction: column;
-				gap: 15px;
+				gap: 40px;
 			}
 			.user-message {
+				flex-direction: row-reverse;
 				align-self: flex-end;
 				margin-left: auto;
-				background-color: variable.$tertiary-color !important;
 				text-align: right;
+
+				.user-profile-picture {
+					background-color: variable.$tertiary-color !important;
+				}
+				.message-info {
+					flex-direction: row-reverse;
+				}
+				// user image and message
+				.message-content {
+					background-color: variable.$tertiary-color !important;
+				}
+				.user-profile-picture {
+					margin-left: auto;
+				}
 			}
 			.message {
 				display: flex;
-				flex-direction: column;
-				border-radius: 10px;
-				background-color: darken(variable.$secondary-color, 5%);
-				padding: 10px;
+				gap: 15px;
 				width: fit-content;
 				// normalizes message size
 				min-width: 40%;
@@ -99,27 +111,65 @@
 					min-width: 80%;
 				}
 
-				img {
-					align-self: center;
-					width: 100%;
-					max-width: 400px;
-					height: auto;
+				.user-profile-picture {
+					border-radius: 75px;
+					background-color: variable.$secondary-color;
+					width: 75px;
+					height: 75px;
 				}
-				h4 {
-					margin: 0;
-					font-weight: 400;
-					font-size: 32px;
+
+				.message-info-date-container {
+					display: flex;
+					flex-direction: column;
+					gap: 10px;
+
+					.message-info {
+						display: flex;
+						align-items: center;
+						gap: 10px;
+
+						// message username
+						h4 {
+							margin: 0;
+							font-weight: 400;
+							font-size: 26px;
+						}
+						.message-date {
+							margin-bottom: -9px;
+							font-weight: 300;
+							font-size: 12px;
+						}
+					}
+					// user image and message
+					.message-content {
+						display: flex;
+						flex-direction: column;
+						gap: 20px;
+						border-radius: 10px;
+						background-color: darken(variable.$secondary-color, 5%);
+						padding: 20px;
+
+						p {
+							font-weight: 400;
+							line-height: 25px;
+						}
+					}
 				}
-				.message-date {
-					margin-top: 20px;
-					font-weight: 300;
-					font-size: 12px;
-				}
-				p {
-					margin: 0;
-					overflow: hidden;
-					font-weight: 300;
-					text-overflow: ellipsis;
+
+				div {
+					.user-image {
+						align-self: center;
+						width: 100%;
+						max-width: 400px;
+						height: auto;
+					}
+					// message
+					p {
+						margin: 0;
+						overflow: hidden;
+						font-weight: 300;
+						text-overflow: ellipsis;
+					}
 				}
 			}
 		}
