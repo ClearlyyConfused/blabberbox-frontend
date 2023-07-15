@@ -142,9 +142,7 @@ function CurrentChat({ currentChat, userInfo, sendMessage, fetchUserChats, setCu
 					<form onSubmit={handleMessage}>
 						<input placeholder="Send a message" id="message" type="text" />
 						<div>
-							<label className="image-input" htmlFor="image">
-								Add Img
-							</label>
+							<label htmlFor="image">Add Img</label>
 							<input type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
 						</div>
 						<button type="submit">Send</button>

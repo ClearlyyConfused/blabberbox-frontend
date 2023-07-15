@@ -47,8 +47,8 @@ $auth-section-width: 60%;
 		// chevron
 		> img:last-child {
 			display: none;
-			height: 150px;
-			object-fit: cover;
+			margin-top: 30px;
+			height: 50px;
 
 			@media (max-width: $mobile-layout-width) {
 				display: block;

@@ -3,11 +3,13 @@ import logo from '../../../images/logo.svg';
 import defaultPFP from '../../../images/Default_pfp.svg';
 
 function Navbar({ userInfo, setUserInfo, setDisplayedPage }) {
-	function handleMessage(event) {
-		event.preventDefault();
-		let reader = new FileReader();
+	function changeProfileImage() {
+		if (document.getElementById('image').files[0] === undefined) {
+			return;
+		}
 
-		reader.readAsDataURL(event.target.elements.image.files[0]);
+		let reader = new FileReader();
+		reader.readAsDataURL(document.getElementById('image').files[0]); // gets input value
 		reader.onloadend = () => {
 			const image = reader.result;
 
@@ -58,8 +60,6 @@ function Navbar({ userInfo, setUserInfo, setDisplayedPage }) {
 						});
 				})
 			);
-
-			event.target.elements.image.value = '';
 		};
 	}
 
@@ -70,7 +70,7 @@ function Navbar({ userInfo, setUserInfo, setDisplayedPage }) {
 				<h1>BlabberBox</h1>
 			</div>
 			<div className="user-info">
-				<div>
+				<div className="user-greeting">
 					<h2>Welcome {userInfo.username}</h2>
 					<p
 						onClick={() => {
@@ -82,11 +82,16 @@ function Navbar({ userInfo, setUserInfo, setDisplayedPage }) {
 						Logout
 					</p>
 				</div>
-				<form onSubmit={handleMessage}>
-					<input type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
-					<button type="submit">Upload PFP</button>
-				</form>
-				<img src={userInfo.image ? userInfo.image : defaultPFP} alt="" />
+				<div className="profile-image">
+					<form onChange={changeProfileImage}>
+						{/* submit form whenever input changes */}
+						<label htmlFor="image">
+							<p>Change PFP</p>
+							<img src={userInfo.image ? userInfo.image : defaultPFP} alt="" />
+						</label>
+						<input type="file" id="image" name="image" accept="image/png, image/jpeg"></input>
+					</form>
+				</div>
 			</div>
 		</nav>
 	);

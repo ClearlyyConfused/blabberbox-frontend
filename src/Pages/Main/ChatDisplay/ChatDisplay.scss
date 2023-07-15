@@ -65,10 +65,10 @@
 			margin: 0;
 			border-top-right-radius: 20px;
 			border-top-left-radius: 20px;
-			padding: 15px;
+			padding: 0;
 			padding-top: 30px;
-			width: 90%;
-			height: 90%;
+			width: 95%;
+			height: 95%;
 			overflow-y: scroll;
 			list-style: none;
 
@@ -107,24 +107,30 @@
 				max-width: 80%;
 
 				// force messages take up majority view on mobile layout
-				@media (max-width: 426px) {
-					min-width: 80%;
+				@media (max-width: 600px) {
+					min-width: 100%;
 				}
 
 				.user-profile-picture {
+					margin: 0;
 					border-radius: 75px;
 					background-color: variable.$secondary-color;
 					width: 75px;
+					min-width: 75px;
 					height: 75px;
+					@media (max-width: 400px) {
+						//display: none;
+					}
 				}
 
 				.message-info-date-container {
 					display: flex;
 					flex-direction: column;
-					gap: 10px;
+					gap: 12px;
 
 					.message-info {
 						display: flex;
+						flex-wrap: wrap;
 						align-items: center;
 						gap: 10px;
 
@@ -185,7 +191,7 @@
 
 			form {
 				display: flex;
-				gap: 20px;
+				gap: 15px;
 				width: 100%;
 				// message input
 				#message {
@@ -205,23 +211,24 @@
 				::-webkit-file-upload-button {
 					display: none;
 				}
-				#image {
-					margin: auto;
-					width: 150px;
-					text-align: center;
-				}
-				.image-input {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					border: 1.5px solid white;
-					min-width: 60px;
-					font-weight: 300;
-					font-size: 12px;
-					text-align: center;
-				}
-				.image-input:hover {
-					cursor: pointer;
+				div {
+					#image {
+						display: none;
+					}
+					label {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						border: 1.5px solid white;
+						min-width: 60px;
+						height: 100%;
+						font-weight: 300;
+						font-size: 12px;
+						text-align: center;
+					}
+					.image-input:hover {
+						cursor: pointer;
+					}
 				}
 
 				// send button
