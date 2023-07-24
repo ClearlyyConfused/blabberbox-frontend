@@ -1,91 +1,9 @@
 .main {
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
 	box-sizing: border-box;
-	background-color: black;
+	box-sizing: border-box;
+	padding-bottom: 20px;
 	width: 100%;
-	height: 100vh;
-	box-sizing: border-box;
-	overflow-y: scroll;
 	color: white;
-
-	.chat-form-container {
-		display: flex;
-		gap: 30px;
-		@media (max-width: 500px) {
-			flex-direction: column;
-			align-self: center;
-		}
-	}
-	.chat-form {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		gap: 10px;
-		background-color: black;
-		direction: ltr;
-		border-bottom: 1.5px solid white;
-		top: 0px;
-		position: sticky;
-
-		h1 {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin: 0;
-			font-size: 30px;
-			height: 80px;
-			border-bottom: 1.5px solid white;
-			width: 100%;
-		}
-		h1:hover {
-			cursor: pointer;
-		}
-		form {
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-
-			// groups input name and input bar
-			div {
-				display: flex;
-				flex-direction: column;
-				gap: 5px;
-				max-width: 175px;
-			}
-
-			input {
-				align-self: center;
-				width: 100%;
-				height: 30px;
-				background-color: transparent;
-				border: 1.5px solid white;
-				color: white;
-			}
-
-			label,
-			input {
-				font-size: 20px;
-			}
-		}
-		button {
-			width: fit-content;
-			background-color: transparent;
-			color: white;
-			border: 1.5px solid white;
-			border-radius: 0px;
-			width: 100%;
-		}
-		button:hover {
-			cursor: pointer;
-		}
-		// error message
-		p {
-			margin: 0;
-			padding-bottom: 10px;
-			text-align: center;
-		}
-	}
 }

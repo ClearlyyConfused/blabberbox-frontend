@@ -1,0 +1,37 @@
+@use './variable';
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300;400;700;800&display=swap');
+
+html,
+body {
+	position: relative;
+	overflow-x: hidden;
+}
+
+html {
+	min-height: 100%; // fixes scroll on main page not working with overflow-x hidden
+}
+
+body {
+	margin: 0;
+	background-color: black;
+	overflow-x: hidden;
+	font-family: 'Merriweather Sans', sans-serif;
+}
+
+#root {
+	background-color: variable.$secondary-color;
+	width: 100%;
+}
+
+button {
+	border-style: solid;
+	border-radius: 10px;
+	background-color: white;
+	padding: 5px;
+	width: fit-content;
+	font-size: 16px;
+}
+
+* {
+	box-sizing: border-box;
+}

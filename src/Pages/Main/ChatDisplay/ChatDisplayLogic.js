@@ -24,7 +24,23 @@ function ChatDisplayLogic(userChatsIDs, setChatsInfo) {
 			const chat = await fetchChatInfo(chatID);
 			arr.push(chat);
 		}
-		setChatsInfo(arr);
+
+		// sorts messages by latest
+		const sorter = (a, b) => {
+			// returns -1 if chat has no message (put last in array)
+			if (b.messages[b.messages.length - 1] === undefined) {
+				return -1;
+			} else if (a.messages[a.messages.length - 1] === undefined) {
+				return -1;
+			}
+
+			return (
+				new Date(a.messages[a.messages.length - 1].timeSent) -
+				new Date(b.messages[b.messages.length - 1].timeSent)
+			);
+		};
+		arr.sort(sorter);
+		setChatsInfo([...arr].reverse());
 
 		// if being called after a message is sent, reset chat scroll chat to bottom
 		if (f === 1) {

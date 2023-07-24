@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import ChatDisplay from './ChatDisplay/ChatDisplay';
-import ChatCreateForm from './ChatCreateForm';
-import ChatJoinForm from './ChatJoinForm';
+import Navbar from './Navbar/Navbar';
 import './Main.css';
 
 // uses userInfo from App to get user's chats from API when needed
 // updates user's chats whenever user creates/joins a chat to get an updated list of chats
-function Main({ userInfo }) {
+function Main({ userInfo, setUserInfo, setDisplayedPage }) {
 	// obtained from fetchUserChats() on userInfo
 	const [userChatsIDs, setUserChatsIDs] = useState();
 
@@ -37,15 +36,7 @@ function Main({ userInfo }) {
 
 	return (
 		<main className="main">
-			{ /*
-			<div className="chat-form-container">
-					creates chats 
-				<ChatCreateForm userInfo={userInfo} fetchUserChats={fetchUserChats} />
-				join chats
-				<ChatJoinForm userInfo={userInfo} fetchUserChats={fetchUserChats} />
-				 both call fetchUserChats() after to get an updated list
-			</div> /* }
-			{/*	chatDisplay component to display list of chats and current chat using userChatIDs*/}
+			<Navbar userInfo={userInfo} setUserInfo={setUserInfo} setDisplayedPage={setDisplayedPage} />
 			<ChatDisplay userChatsIDs={userChatsIDs} userInfo={userInfo} fetchUserChats={fetchUserChats} />
 		</main>
 	);

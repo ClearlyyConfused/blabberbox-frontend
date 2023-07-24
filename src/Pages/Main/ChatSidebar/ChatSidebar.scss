@@ -1,0 +1,217 @@
+@use '../../../variable';
+
+.chat-sidebar {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	box-sizing: border-box;
+	background-color: variable.$secondary-color;
+	width: max(300px, 25%);
+	height: 750px;
+	overflow-x: hidden;
+	direction: rtl; // scrollbar on left
+
+	// create/join chat buttons
+	.add-chat {
+		display: flex;
+		position: sticky;
+		top: 0px;
+		flex-direction: column;
+
+		.add-chat-header {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 10px;
+			box-sizing: border-box;
+			margin-top: 10px;
+			border-bottom: 1.5px solid white;
+			height: 80px;
+
+			h2 {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin: 0;
+				font-weight: 800;
+				font-size: 30px;
+				text-align: center;
+			}
+			img {
+				filter: invert(1);
+				width: 25px;
+				height: 25px;
+			}
+			&:hover {
+				cursor: pointer;
+			}
+		}
+
+		.add-chat-buttons {
+			overflow-y: hidden;
+		}
+
+		button:hover {
+			cursor: pointer;
+			background-color: rgba(255, 255, 255, 0.1);
+		}
+		button {
+			border: 0px;
+			border-bottom: 1.5px solid white;
+			border-radius: 0px;
+			background-color: transparent;
+			width: 100%;
+			height: 80px;
+			color: white;
+		}
+	}
+
+	.chat-form-container {
+		display: flex;
+		gap: 30px;
+		@media (max-width: 500px) {
+			flex-direction: column;
+			align-self: center;
+		}
+	}
+
+	@media (max-width: 800px) {
+		width: 100%;
+		min-width: 0px;
+		max-width: none;
+	}
+}
+
+.chat-list-container {
+	.chat-list {
+		margin: 0;
+		margin-top: auto;
+		border-radius: 20px;
+		background-color: variable.$primary-color;
+		padding: 10px;
+		height: (750px - 80px - 30px - 10px); // height of current chat - add chat - gap - padding
+		overflow-y: scroll;
+		list-style: none;
+		direction: ltr;
+
+		// chats listed
+		.chat:hover {
+			cursor: pointer;
+			background-color: rgba(255, 255, 255, 0.1);
+		}
+		.chat:last-child {
+			border-bottom: none !important;
+		}
+		.chat {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+			padding: 10px;
+			height: 80px;
+
+			// name of chat
+			h3 {
+				margin: 0;
+				overflow: hidden;
+				font-weight: 400;
+				text-overflow: ellipsis;
+			}
+			// latest chat message
+			p {
+				margin: 0;
+				overflow: hidden;
+				overflow-x: hidden;
+				font-weight: 300;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+	}
+
+	// scrollbar for chat
+	.chat-list::-webkit-scrollbar {
+		width: 2px;
+	}
+	.chat-list::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		background: rgb(255, 255, 255);
+	}
+}
+
+.add-chat-forms {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	margin: 0;
+	margin-top: auto;
+	border-radius: 20px;
+	background-color: variable.$primary-color;
+	padding: 10px;
+	height: (750px - 80px - 30px - 10px); // height of current chat - add chat - gap - padding
+	list-style: none;
+	direction: ltr;
+
+	.chat-form {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+
+		h1 {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: 0;
+			width: 100%;
+			height: 80px;
+			font-size: 30px;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+
+			// groups input name and input bar
+			div {
+				display: flex;
+				flex-direction: column;
+				gap: 5px;
+				max-width: 175px;
+			}
+
+			input {
+				align-self: center;
+				border: 1.5px solid white;
+				background-color: transparent;
+				width: 100%;
+				height: 30px;
+				color: white;
+			}
+
+			label,
+			input {
+				font-size: 20px;
+			}
+		}
+		button {
+			border: 1.5px solid white;
+			border-radius: 0px;
+			background-color: transparent;
+			width: fit-content;
+			width: 100%;
+			color: white;
+		}
+		button:hover {
+			cursor: pointer;
+		}
+		// error message
+		p {
+			margin: 0;
+			padding-bottom: 10px;
+			text-align: center;
+		}
+	}
+}

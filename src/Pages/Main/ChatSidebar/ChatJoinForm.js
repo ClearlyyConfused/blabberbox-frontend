@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-function ChatCreateForm({ userInfo, fetchUserChats, setFormDisplay }) {
-	// shows error message if chat cannot be created
-	const [successFlag, setSuccessFlag] = useState(true)
+function ChatJoinForm({ userInfo, fetchUserChats }) {
+	// shows error message if cannot join chat
+	const [successFlag, setSuccessFlag] = useState(true);
 
 	function handleSubmit(event) {
 		event.preventDefault();
-		setSuccessFlag(true)
+		setSuccessFlag(true);
 
 		const reqOptions = {
 			method: 'POST',
@@ -14,21 +14,22 @@ function ChatCreateForm({ userInfo, fetchUserChats, setFormDisplay }) {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				name: event.target.elements.chatName.value,
-				password: event.target.elements.password.value,
-				user: userInfo.userID,
+				chatName: event.target.elements.chatName.value,
+				chatPassword: event.target.elements.password.value,
+				userID: userInfo.userID,
 			}),
 		};
 		// create a new chat then updates the userInfo
-		fetch('https://blabberbox-backend.vercel.app/createChat', reqOptions).then((res) =>
+		fetch('https://blabberbox-backend.vercel.app/joinChat', reqOptions).then((res) =>
 			res.json().then((data) => {
 				if (data.success === true) {
 					fetchUserChats();
 					event.target.elements.chatName.value = '';
 					event.target.elements.password.value = '';
-					setFormDisplay("")
+				} else if (data.success === false) {
+					setSuccessFlag(false);
 				} else {
-					setSuccessFlag(false)
+					setSuccessFlag('already_in_chat');
 				}
 			})
 		);
@@ -36,7 +37,7 @@ function ChatCreateForm({ userInfo, fetchUserChats, setFormDisplay }) {
 
 	return (
 		<section className="chat-form">
-			<h1 onClick={(() => setFormDisplay(""))}>Create Chat</h1>
+			<h1>Join Chat</h1>
 			<form onSubmit={handleSubmit}>
 				<div>
 					<label htmlFor="chat-name">Chat Name</label>
@@ -48,9 +49,15 @@ function ChatCreateForm({ userInfo, fetchUserChats, setFormDisplay }) {
 				</div>
 				<button type="submit">Submit</button>
 			</form>
-			{successFlag ? <p></p> : <p>Chat name already exists</p>}
+			{successFlag === true ? (
+				<p></p>
+			) : successFlag === false ? (
+				<p>Incorrect password</p>
+			) : (
+				<p>Already joined chat</p>
+			)}
 		</section>
 	);
 }
 
-export default ChatCreateForm;
+export default ChatJoinForm;
