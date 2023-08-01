@@ -1,0 +1,13 @@
+@use '../../../variable';
+
+.sidebar-chat-container {
+	display: flex;
+	flex: 1;
+	gap: 20px;
+	padding: 0px 20px;
+
+	// width to switch to mobile layout
+	@media (max-width: 800px) {
+		flex-direction: column;
+	}
+}

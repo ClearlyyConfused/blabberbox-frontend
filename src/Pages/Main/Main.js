@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import ChatDisplay from './ChatDisplay/ChatDisplay';
+import SidebarChatContainer from './SidebarChatContainer/SidebarChatContainer';
 import Navbar from './Navbar/Navbar';
 import './Main.css';
 
@@ -37,7 +37,7 @@ function Main({ userInfo, setUserInfo, setDisplayedPage }) {
 	return (
 		<main className="main">
 			<Navbar userInfo={userInfo} setUserInfo={setUserInfo} setDisplayedPage={setDisplayedPage} />
-			<ChatDisplay userChatsIDs={userChatsIDs} userInfo={userInfo} fetchUserChats={fetchUserChats} />
+			<SidebarChatContainer userChatsIDs={userChatsIDs} userInfo={userInfo} fetchUserChats={fetchUserChats} />
 		</main>
 	);
 }

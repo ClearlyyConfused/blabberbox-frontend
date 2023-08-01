@@ -1,0 +1,1 @@
+.sidebar-chat-container{display:flex;flex:1;gap:20px;padding:0px 20px}@media(max-width: 800px){.sidebar-chat-container{flex-direction:column}}

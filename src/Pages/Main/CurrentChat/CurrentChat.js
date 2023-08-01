@@ -3,6 +3,7 @@ import CurrentChatInfo from './CurrentChatInfo';
 import downChevron from '../../../images/chevron-down-icon.svg';
 import back from '../../../images/back-arrow-svgrepo-com.svg';
 import defaultPFP from '../../../images/Default_pfp.svg';
+import './CurrentChat.css';
 
 // is the current chat being displayed on the screen, user can send messages to that chat
 function CurrentChat({ currentChat, userInfo, sendMessage, fetchUserChats, setCurrentChat }) {

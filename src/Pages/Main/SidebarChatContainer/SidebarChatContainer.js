@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import ChatSidebar from '../ChatSidebar/ChatSidebar';
-import CurrentChat from './CurrentChat';
-import ChatDisplayLogic from './ChatDisplayLogic';
+import CurrentChat from '../CurrentChat/CurrentChat';
+import ChatDisplayLogic from './SidebarChatLogic';
 import './ChatDisplay.css';
 
 // fetches and displays chat info using userChatsIDs
 // also displays chat sidebar
-function ChatDisplay({ userChatsIDs, userInfo, fetchUserChats }) {
+function SidebarChatContainer({ userChatsIDs, userInfo, fetchUserChats }) {
 	// array of info for each chat
 	const [chatsInfo, setChatsInfo] = useState([]);
 	// current chat to display
@@ -28,7 +28,7 @@ function ChatDisplay({ userChatsIDs, userInfo, fetchUserChats }) {
 	}, [userChatsIDs]);
 
 	return (
-		<main className="chat-display">
+		<main className="sidebar-chat-container">
 			{/* ChatList component displays each chat name and sets the current chat */}
 			<ChatSidebar
 				chatsInfo={chatsInfo}
@@ -49,4 +49,4 @@ function ChatDisplay({ userChatsIDs, userInfo, fetchUserChats }) {
 	);
 }
 
-export default ChatDisplay;
+export default SidebarChatContainer;
