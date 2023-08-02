@@ -61,67 +61,66 @@
 		overflow-y: scroll;
 		list-style: none;
 
-		// div holding all messages
+		// div holding all grouped messages
 		.messages-container {
 			display: flex;
 			flex-direction: column;
 			gap: 40px;
-		}
-		.user-message {
-			flex-direction: row-reverse;
-			align-self: flex-end;
-			margin-left: auto;
-			text-align: right;
 
-			.user-profile-picture {
-				background-color: variable.$tertiary-color !important;
-			}
-			.message-info {
+			// user messages
+			.user-message {
 				flex-direction: row-reverse;
-			}
-			// user image and message
-			.message-content {
-				background-color: variable.$tertiary-color !important;
-			}
-			.user-profile-picture {
+				align-self: flex-end;
 				margin-left: auto;
-			}
-		}
-		.message {
-			display: flex;
-			gap: 15px;
-			width: fit-content;
-			// normalizes message size
-			min-width: 40%;
-			max-width: 80%;
+				text-align: right;
 
-			// force messages take up majority view on mobile layout
-			@media (max-width: 600px) {
-				min-width: 100%;
-			}
-
-			.user-profile-picture {
-				margin: 0;
-				border-radius: 75px;
-				background-color: variable.$secondary-color;
-				width: 75px;
-				min-width: 75px;
-				height: 75px;
-				@media (max-width: 400px) {
-					//display: none;
+				.user-profile-picture {
+					background-color: variable.$tertiary-color !important;
+				}
+				.message-info {
+					flex-direction: row-reverse;
+				}
+				// user image and message
+				.message-content {
+					background-color: variable.$tertiary-color !important;
+				}
+				.user-profile-picture {
+					margin-left: auto;
 				}
 			}
 
-			.message-info-date-container {
+			// all messages
+			.message {
 				display: flex;
-				flex-direction: column;
-				gap: 12px;
+				gap: 10px;
+				width: fit-content;
+				// normalizes message size
+				min-width: 40%;
+				max-width: 80%;
+
+				// force messages take up majority view on mobile layout
+				@media (max-width: 600px) {
+					min-width: 100%;
+				}
+
+				.user-profile-picture {
+					margin: 0;
+					border-radius: 75px;
+					background-color: variable.$secondary-color;
+					width: 75px;
+					min-width: 75px;
+					height: 75px;
+					@media (max-width: 400px) {
+						//display: none;
+					}
+				}
 
 				.message-info {
 					display: flex;
 					flex-wrap: wrap;
 					align-items: center;
-					gap: 10px;
+					gap: 5px;
+					height: fit-content;
 
 					// message username
 					h4 {
@@ -135,23 +134,29 @@
 						font-size: 12px;
 					}
 				}
-				// user image and message
-				.message-content {
+
+				.message-content-container {
 					display: flex;
 					flex-direction: column;
-					gap: 20px;
-					border-radius: 10px;
-					background-color: darken(variable.$secondary-color, 5%);
-					padding: 20px;
+					gap: 8px;
+					margin-top: 15px;
 
-					p {
-						font-weight: 400;
-						line-height: 25px;
+					// user image and message
+					.message-content {
+						display: flex;
+						flex-direction: column;
+						gap: 10px;
+						border-radius: 10px;
+						background-color: darken(variable.$secondary-color, 5%);
+						padding: 12px;
+
+						p {
+							font-weight: 400;
+							line-height: 25px;
+						}
 					}
 				}
-			}
 
-			div {
 				.user-image {
 					align-self: center;
 					width: 100%;
@@ -201,7 +206,7 @@
 				display: none;
 			}
 			div {
-				#image {
+				#messageImage {
 					display: none;
 				}
 				label {
