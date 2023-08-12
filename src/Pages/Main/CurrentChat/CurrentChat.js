@@ -4,6 +4,7 @@ import downChevron from '../../../images/chevron-down-icon.svg';
 import back from '../../../images/back-arrow-svgrepo-com.svg';
 import './CurrentChat.css';
 import ChatMessage from './ChatMessage';
+import supabase from '../../../supabaseConfig';
 
 // is the current chat being displayed on the screen, user can send messages to that chat
 function CurrentChat({ currentChat, userInfo, sendMessage, fetchUserChats, setCurrentChat }) {
@@ -12,20 +13,8 @@ function CurrentChat({ currentChat, userInfo, sendMessage, fetchUserChats, setCu
 	const [userProfileImages, setUserProfileImages] = useState();
 
 	async function fetchProfileImage(username) {
-		const reqOptions = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				username: username,
-			}),
-		};
-		return fetch('https://blabberbox-backend.vercel.app/getProfileImage', reqOptions)
-			.then((res) => res.json())
-			.then((data) => {
-				return [username, data.userProfileImage];
-			});
+		const { data, error } = await supabase.from('Users').select().eq('username', userInfo.username);
+		return [data[0].username, data[0].image];
 	}
 	// fetches profile image of all users in the chat to display
 	async function fetchAllProfileImages(users) {

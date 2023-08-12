@@ -41,12 +41,33 @@ function ChatDisplayLogic(userChatsIDs, setChatsInfo) {
 		}
 	}
 
+	async function uploadImage(img) {
+		const reqOptions = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ image: img }),
+		};
+
+		return fetch('https://blabberbox-upload.vercel.app/upload', reqOptions).then((res) =>
+			res.json().then((data) => {
+				return data.image;
+			})
+		);
+	}
+
 	// send message to current chat
 	async function sendMessage(message, img, userInfo, currentChatInfo) {
+		let image = '';
+		if (img) {
+			image = await uploadImage(img);
+		}
+
 		const { data, chatError } = await supabase.from('Chats').select().eq('name', currentChatInfo.name);
 		const previousChatData = data[0];
 
-		const newMessage = { user: userInfo.username, message: message, image: '', timeSent: new Date() };
+		const newMessage = { user: userInfo.username, message: message, image: image, timeSent: new Date() };
 
 		const { error } = await supabase
 			.from('Chats')
