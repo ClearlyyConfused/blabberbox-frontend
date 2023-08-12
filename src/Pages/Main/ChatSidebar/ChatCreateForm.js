@@ -31,7 +31,7 @@ function ChatCreateForm({ userInfo, fetchUserChats }) {
 			.update({ chats: [...userData.chats, event.target.elements.chatName.value] })
 			.eq('_id', userData._id);
 
-		// fetchUserChats();
+		fetchUserChats();
 		event.target.elements.chatName.value = '';
 		event.target.elements.password.value = '';
 	}

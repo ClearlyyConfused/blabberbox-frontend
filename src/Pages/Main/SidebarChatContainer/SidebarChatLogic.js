@@ -43,28 +43,6 @@ function ChatDisplayLogic(userChatsIDs, setChatsInfo) {
 
 	// send message to current chat
 	async function sendMessage(message, img, userInfo, currentChatInfo) {
-		/*
-		const reqOptions = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				userID: userInfo.userID,
-				chatID: currentChatInfo._id,
-				message: message,
-				image: img,
-			}),
-		};
-
-		fetch('https://blabberbox-backend.vercel.app/messageChat', reqOptions).then((res) =>
-			res.json().then((data) => {
-				// updates chat info after message is sent, also scrolls that chat to bottom
-				updateChatsInfo(1);
-			})
-		);
-		*/
-
 		const { data, chatError } = await supabase.from('Chats').select().eq('name', currentChatInfo.name);
 		const previousChatData = data[0];
 
