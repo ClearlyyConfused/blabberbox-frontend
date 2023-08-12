@@ -5,9 +5,13 @@ function ChatJoinForm({ userInfo, fetchUserChats }) {
 	// shows error message if cannot join chat
 	const [successFlag, setSuccessFlag] = useState(true);
 
-	async function updateChat(name, value) {
+	async function getChatInfo(name, password) {
 		// update chat's list of users
-		const { data, chatError } = await supabase.from('Chats').select().eq('name', name).eq('password', value);
+		const { data, chatError } = await supabase
+			.from('Chats')
+			.select()
+			.eq('name', name)
+			.eq('password', password);
 		return data[0];
 	}
 
@@ -15,7 +19,7 @@ function ChatJoinForm({ userInfo, fetchUserChats }) {
 		event.preventDefault();
 		setSuccessFlag(true);
 
-		const chatData = await updateChat(
+		const chatData = await getChatInfo(
 			event.target.elements.chatName.value,
 			event.target.elements.password.value
 		);
