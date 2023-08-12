@@ -1,20 +1,10 @@
+import supabase from '../../../supabaseConfig';
+
 function ChatDisplayLogic(userChatsIDs, setChatsInfo) {
 	// return chat data for the inputted chatID
-	async function fetchChatInfo(chatID) {
-		const reqOptions = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				chatID: chatID,
-			}),
-		};
-		return fetch('https://blabberbox-backend.vercel.app/getChat', reqOptions)
-			.then((res) => res.json())
-			.then((chat) => {
-				return chat;
-			});
+	async function fetchChatInfo(chatName) {
+		const { data, error } = await supabase.from('Chats').select().eq('name', chatName);
+		return data[0];
 	}
 
 	// fetches chat info for each chat then updates overall chatsInfo
@@ -51,27 +41,38 @@ function ChatDisplayLogic(userChatsIDs, setChatsInfo) {
 		}
 	}
 
-	// send message to current chat
-	function sendMessage(message, img, userInfo, currentChatInfo) {
+	async function uploadImage(img) {
 		const reqOptions = {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({
-				userID: userInfo.userID,
-				chatID: currentChatInfo._id,
-				message: message,
-				image: img,
-			}),
+			body: JSON.stringify({ image: img }),
 		};
 
-		fetch('https://blabberbox-backend.vercel.app/messageChat', reqOptions).then((res) =>
+		return fetch('https://blabberbox-upload.vercel.app/upload', reqOptions).then((res) =>
 			res.json().then((data) => {
-				// updates chat info after message is sent, also scrolls that chat to bottom
-				updateChatsInfo(1);
+				return data.image;
 			})
 		);
+	}
+
+	// send message to current chat
+	async function sendMessage(message, img, userInfo, currentChatInfo) {
+		let image = '';
+		if (img) {
+			image = await uploadImage(img);
+		}
+
+		const { data, chatError } = await supabase.from('Chats').select().eq('name', currentChatInfo.name);
+		const previousChatData = data[0];
+
+		const newMessage = { user: userInfo.username, message: message, image: image, timeSent: new Date() };
+
+		const { error } = await supabase
+			.from('Chats')
+			.update({ messages: [...previousChatData.messages, newMessage] })
+			.eq('_id', previousChatData._id);
 	}
 
 	function getCurrentChatInfo(chatsInfo, currentChat) {

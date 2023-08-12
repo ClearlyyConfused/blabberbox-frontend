@@ -1,27 +1,42 @@
 import { useState } from 'react';
+import supabase from '../../../supabaseConfig';
 
 function CurrentChatInfo({ currentChat, userInfo, fetchUserChats, setCurrentChat }) {
 	const [showPassword, setShowPassword] = useState(false);
 
+	async function getChatInfo(name, password) {
+		// update chat's list of users
+		const { data, chatError } = await supabase
+			.from('Chats')
+			.select()
+			.eq('name', name)
+			.eq('password', password);
+		return data[0];
+	}
+
 	// delete chat from user
-	function handleSubmit(chatID) {
-		const reqOptions = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				userID: userInfo.userID,
-				chatID: chatID,
-			}),
-		};
-		return fetch('https://blabberbox-backend.vercel.app/leaveChat', reqOptions)
-			.then((res) => res.json())
-			.then((data) => {
-				// fetch new list of chat
-				fetchUserChats();
-				setCurrentChat(undefined);
-			});
+	async function handleSubmit() {
+		// update chat's list of users
+		const chatData = await getChatInfo(currentChat.name, currentChat.password);
+		const { error1 } = await supabase
+			.from('Chats')
+			.update({ users: chatData.users.filter((e) => e !== userInfo.username) })
+			.eq('_id', chatData._id);
+
+		// update user's list of chats
+		const { data, userError } = await supabase
+			.from('Users')
+			.select()
+			.eq('username', userInfo.username)
+			.eq('password', userInfo.password);
+		const userData = data[0];
+		const { error2 } = await supabase
+			.from('Users')
+			.update({ chats: userData.chats.filter((e) => e !== currentChat.name) })
+			.eq('_id', userData._id);
+
+		fetchUserChats();
+		setCurrentChat(undefined);
 	}
 
 	function countUserMessages() {
@@ -57,7 +72,7 @@ function CurrentChatInfo({ currentChat, userInfo, fetchUserChats, setCurrentChat
 			</div>
 			<button
 				onClick={() => {
-					handleSubmit(currentChat._id);
+					handleSubmit();
 				}}
 			>
 				Leave Chat

@@ -1,46 +1,41 @@
+import supabase from '../../supabaseConfig';
+
 function AuthLogic() {
-	function login(username, password, setUserInfo, setDisplayedPage, setSuccessFlag) {
+	async function login(username, password, setUserInfo, setDisplayedPage, setSuccessFlag) {
 		setSuccessFlag(true);
-		const reqOptions = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				username: username,
-				password: password,
-			}),
-		};
+		const { data, error } = await supabase
+			.from('Users')
+			.select()
+			.eq('username', username)
+			.eq('password', password);
 
-		fetch('https://blabberbox-backend.vercel.app/getUser', reqOptions)
-			.then((res) => res.json())
-			.then((user) => {
-				if (user.success === undefined) {
-					setUserInfo({
-						userID: user[0]._id,
-						username: user[0].username,
-						password: user[0].password,
-						chats: user[0].chats,
-						image: user[0].image,
-					});
+		if (data[0]) {
+			let user = data;
 
-					// store user info in local storage
-					localStorage.setItem(
-						'userInfo',
-						JSON.stringify({
-							userID: user[0]._id,
-							username: user[0].username,
-							password: user[0].password,
-							chats: user[0].chats,
-							image: user[0].image,
-						})
-					);
-
-					setDisplayedPage('Main');
-				} else {
-					setSuccessFlag(false);
-				}
+			setUserInfo({
+				userID: user[0]._id,
+				username: user[0].username,
+				password: user[0].password,
+				chats: user[0].chats,
+				image: user[0].image,
 			});
+
+			// store user info in local storage
+			localStorage.setItem(
+				'userInfo',
+				JSON.stringify({
+					userID: user[0]._id,
+					username: user[0].username,
+					password: user[0].password,
+					chats: user[0].chats,
+					image: user[0].image,
+				})
+			);
+
+			setDisplayedPage('Main');
+		} else {
+			setSuccessFlag(false);
+		}
 	}
 
 	return { login };

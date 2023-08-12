@@ -3,40 +3,31 @@ import './Auth.css';
 import AuthLogic from './AuthLogic';
 import logo from '../../images/logo.svg';
 import chevron from '../../images/chevron-down-icon.svg';
+import supabase from '../../supabaseConfig';
 
 function Register({ setDisplayedPage, setUserInfo }) {
 	// shows error message if cannot register
 	const [successFlag, setSuccessFlag] = useState(true);
 	const { login } = AuthLogic();
 
-	function handleSubmit(event) {
+	async function handleSubmit(event) {
 		event.preventDefault();
 		setSuccessFlag(true);
 
-		const reqOptions = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
+		const username = event.target.elements.username.value;
+		const password = event.target.elements.password.value;
+
+		const { data, error } = await supabase.from('Users').insert([
+			{
 				username: event.target.elements.username.value,
 				password: event.target.elements.password.value,
-			}),
-		};
+				chats: [],
+			},
+		]);
 
-		fetch('https://blabberbox-backend.vercel.app/createUser', reqOptions).then((res) =>
-			res.json().then((data) => {
-				// if registration successful, login
-				if (data.success === true) {
-					const username = event.target.elements.username.value;
-					const password = event.target.elements.password.value;
-					login(username, password, setUserInfo, setDisplayedPage, setSuccessFlag);
-				} // else display error message
-				else {
-					setSuccessFlag(false);
-				}
-			})
-		);
+		if (error === null) {
+			login(username, password, setUserInfo, setDisplayedPage, setSuccessFlag);
+		}
 	}
 
 	return (

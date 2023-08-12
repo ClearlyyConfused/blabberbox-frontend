@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import SidebarChatContainer from './SidebarChatContainer/SidebarChatContainer';
 import Navbar from './Navbar/Navbar';
 import './Main.css';
+import supabase from '../../supabaseConfig';
 
 // uses userInfo from App to get user's chats from API when needed
 // updates user's chats whenever user creates/joins a chat to get an updated list of chats
@@ -10,23 +11,16 @@ function Main({ userInfo, setUserInfo, setDisplayedPage }) {
 	const [userChatsIDs, setUserChatsIDs] = useState();
 
 	// sets userChatIDs to fetched chat IDs
-	function fetchUserChats() {
-		const reqOptions = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				username: userInfo.username,
-				password: userInfo.password,
-			}),
-		};
+	async function fetchUserChats() {
+		const { data, error } = await supabase
+			.from('Users')
+			.select()
+			.eq('username', userInfo.username)
+			.eq('password', userInfo.password);
 
-		fetch('https://blabberbox-backend.vercel.app/getUser', reqOptions)
-			.then((res) => res.json())
-			.then((user) => {
-				setUserChatsIDs(user[0].chats);
-			});
+		if (data) {
+			setUserChatsIDs(data[0].chats);
+		}
 	}
 
 	// on initial render to get initial chats

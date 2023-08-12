@@ -1,38 +1,48 @@
 import { useState } from 'react';
+import supabase from '../../../supabaseConfig';
 
 function ChatJoinForm({ userInfo, fetchUserChats }) {
 	// shows error message if cannot join chat
 	const [successFlag, setSuccessFlag] = useState(true);
 
-	function handleSubmit(event) {
+	async function getChatInfo(name, password) {
+		// update chat's list of users
+		const { data, chatError } = await supabase
+			.from('Chats')
+			.select()
+			.eq('name', name)
+			.eq('password', password);
+		return data[0];
+	}
+
+	async function handleSubmit(event) {
 		event.preventDefault();
 		setSuccessFlag(true);
 
-		const reqOptions = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				chatName: event.target.elements.chatName.value,
-				chatPassword: event.target.elements.password.value,
-				userID: userInfo.userID,
-			}),
-		};
-		// create a new chat then updates the userInfo
-		fetch('https://blabberbox-backend.vercel.app/joinChat', reqOptions).then((res) =>
-			res.json().then((data) => {
-				if (data.success === true) {
-					fetchUserChats();
-					event.target.elements.chatName.value = '';
-					event.target.elements.password.value = '';
-				} else if (data.success === false) {
-					setSuccessFlag(false);
-				} else {
-					setSuccessFlag('already_in_chat');
-				}
-			})
+		const chatData = await getChatInfo(
+			event.target.elements.chatName.value,
+			event.target.elements.password.value
 		);
+		const { error1 } = await supabase
+			.from('Chats')
+			.update({ users: [...chatData.users, userInfo.username] })
+			.eq('_id', chatData._id);
+
+		// update user's list of chats
+		const { data, userError } = await supabase
+			.from('Users')
+			.select()
+			.eq('username', userInfo.username)
+			.eq('password', userInfo.password);
+		const userData = data[0];
+		const { error2 } = await supabase
+			.from('Users')
+			.update({ chats: [...userData.chats, event.target.elements.chatName.value] })
+			.eq('_id', userData._id);
+
+		fetchUserChats();
+		event.target.elements.chatName.value = '';
+		event.target.elements.password.value = '';
 	}
 
 	return (
