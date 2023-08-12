@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import CurrentChatInfo from './CurrentChatInfo';
 import downChevron from '../../../images/chevron-down-icon.svg';
 import back from '../../../images/back-arrow-svgrepo-com.svg';
-import defaultPFP from '../../../images/Default_pfp.svg';
 import './CurrentChat.css';
 import ChatMessage from './ChatMessage';
 

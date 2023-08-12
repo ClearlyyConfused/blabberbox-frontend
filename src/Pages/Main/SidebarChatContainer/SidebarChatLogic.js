@@ -1,20 +1,10 @@
+import supabase from '../../../supabaseConfig';
+
 function ChatDisplayLogic(userChatsIDs, setChatsInfo) {
 	// return chat data for the inputted chatID
-	async function fetchChatInfo(chatID) {
-		const reqOptions = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				chatID: chatID,
-			}),
-		};
-		return fetch('https://blabberbox-backend.vercel.app/getChat', reqOptions)
-			.then((res) => res.json())
-			.then((chat) => {
-				return chat;
-			});
+	async function fetchChatInfo(chatName) {
+		const { data, error } = await supabase.from('Chats').select().eq('name', chatName);
+		return data[0];
 	}
 
 	// fetches chat info for each chat then updates overall chatsInfo
@@ -52,7 +42,8 @@ function ChatDisplayLogic(userChatsIDs, setChatsInfo) {
 	}
 
 	// send message to current chat
-	function sendMessage(message, img, userInfo, currentChatInfo) {
+	async function sendMessage(message, img, userInfo, currentChatInfo) {
+		/*
 		const reqOptions = {
 			method: 'POST',
 			headers: {
@@ -72,6 +63,17 @@ function ChatDisplayLogic(userChatsIDs, setChatsInfo) {
 				updateChatsInfo(1);
 			})
 		);
+		*/
+
+		const { data, chatError } = await supabase.from('Chats').select().eq('name', currentChatInfo.name);
+		const previousChatData = data[0];
+
+		const newMessage = { user: userInfo.username, message: message, image: '', timeSent: new Date() };
+
+		const { error } = await supabase
+			.from('Chats')
+			.update({ messages: [...previousChatData.messages, newMessage] })
+			.eq('_id', previousChatData._id);
 	}
 
 	function getCurrentChatInfo(chatsInfo, currentChat) {

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import ChatSidebar from '../ChatSidebar/ChatSidebar';
 import CurrentChat from '../CurrentChat/CurrentChat';
-import ChatDisplayLogic from './SidebarChatLogic';
+import SidebarChatLogic from './SidebarChatLogic';
 import './ChatDisplay.css';
+import supabase from '../../../supabaseConfig';
 
 // fetches and displays chat info using userChatsIDs
 // also displays chat sidebar
@@ -12,20 +13,37 @@ function SidebarChatContainer({ userChatsIDs, userInfo, fetchUserChats }) {
 	// current chat to display
 	const [currentChat, setCurrentChat] = useState();
 	// get logic for all components
-	const { updateChatsInfo, sendMessage, getCurrentChatInfo } = ChatDisplayLogic(userChatsIDs, setChatsInfo);
+	const { updateChatsInfo, sendMessage, getCurrentChatInfo } = SidebarChatLogic(userChatsIDs, setChatsInfo);
 
 	// whenever user's chat IDs change, set an interval to fetch info from all the chatIDs
 	useEffect(() => {
 		if (userChatsIDs !== undefined) {
 			updateChatsInfo();
 			const timer = setInterval(() => {
-				updateChatsInfo();
+				//	updateChatsInfo();
 			}, 10000);
 			return () => {
 				clearInterval(timer);
 			};
 		}
 	}, [userChatsIDs]);
+
+	useEffect(() => {
+		const channel = supabase
+			.channel('table_db_changes')
+			.on(
+				'postgres_changes',
+				{
+					event: '*',
+					schema: 'public',
+					table: 'Chats',
+				},
+				(payload) => {
+					updateChatsInfo(1);
+				}
+			)
+			.subscribe();
+	}, [currentChat]);
 
 	return (
 		<main className="sidebar-chat-container">
