@@ -3,17 +3,27 @@ import './Auth.css';
 import AuthLogic from './AuthLogic';
 import logo from '../../images/logo.svg';
 import chevron from '../../images/chevron-down-icon.svg';
+import supabase from '../../supabaseConfig';
 
 function Login({ setUserInfo, setDisplayedPage }) {
 	// shows error message if cannot login
 	const [successFlag, setSuccessFlag] = useState(true);
 	const { login } = AuthLogic();
 
-	function handleSubmit(event) {
+	async function handleSubmit(event) {
 		event.preventDefault();
 		const username = event.target.elements.username.value;
 		const password = event.target.elements.password.value;
-		login(username, password, setUserInfo, setDisplayedPage, setSuccessFlag);
+
+		const { data, error } = await supabase
+			.from('Users')
+			.select()
+			.eq('username', username)
+			.eq('password', password);
+
+		if (data[0]) {
+			login(username, password, setUserInfo, setDisplayedPage, setSuccessFlag);
+		}
 	}
 
 	return (
