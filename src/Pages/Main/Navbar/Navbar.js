@@ -36,15 +36,6 @@ function Navbar({ userInfo, setUserInfo, setDisplayedPage }) {
 
 			if (data[0]) {
 				let user = data;
-
-				setUserInfo({
-					userID: user[0]._id,
-					username: user[0].username,
-					password: user[0].password,
-					chats: user[0].chats,
-					image: user[0].image,
-				});
-
 				// store user info in local storage
 				localStorage.setItem(
 					'userInfo',
@@ -56,6 +47,7 @@ function Navbar({ userInfo, setUserInfo, setDisplayedPage }) {
 						image: user[0].image,
 					})
 				);
+				window.location.reload();
 			}
 		};
 	}
