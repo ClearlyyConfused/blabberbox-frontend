@@ -5,25 +5,20 @@ import SidebarChatLogic from './SidebarChatLogic';
 import './ChatDisplay.css';
 import supabase from '../../../supabaseConfig';
 
-// fetches and displays chat info using userChatsIDs
 // also displays chat sidebar
-function SidebarChatContainer({ userChatsIDs, userInfo, fetchUserChats }) {
+function SidebarChatContainer({ userInfo, fetchUserChats }) {
 	// array of info for each chat
 	const [chatsInfo, setChatsInfo] = useState([]);
 	// current chat to display
 	const [currentChat, setCurrentChat] = useState();
 	// get logic for all components
-	const { updateChatsInfo, sendMessage, getCurrentChatInfo } = SidebarChatLogic(
-		userChatsIDs,
-		setChatsInfo,
-		userInfo
-	);
+	const { updateChatsInfo, sendMessage, getCurrentChatInfo } = SidebarChatLogic(setChatsInfo, userInfo);
 
 	useEffect(() => {
-		if (userChatsIDs !== undefined) {
+		if (userInfo.chats !== undefined) {
 			updateChatsInfo();
 		}
-	}, [userChatsIDs]);
+	}, []);
 
 	useEffect(() => {
 		const channel = supabase
@@ -38,7 +33,7 @@ function SidebarChatContainer({ userChatsIDs, userInfo, fetchUserChats }) {
 				(payload) => {
 					if (currentChat === payload.new._id) {
 						updateChatsInfo(1);
-					} else if (userChatsIDs.includes(payload.new.name)) {
+					} else if (userInfo.chats.includes(payload.new.name)) {
 						updateChatsInfo(0);
 					}
 				}

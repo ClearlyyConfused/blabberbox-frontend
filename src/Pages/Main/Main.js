@@ -11,17 +11,7 @@ function Main({ userInfo, setUserInfo, setDisplayedPage }) {
 	const [userChatsIDs, setUserChatsIDs] = useState([]);
 
 	// sets userChatIDs to fetched chat IDs
-	async function fetchUserChats() {
-		const { data, error } = await supabase
-			.from('Users')
-			.select()
-			.eq('username', userInfo.username)
-			.eq('password', userInfo.password);
-
-		if (data) {
-			setUserChatsIDs(data[0].chats);
-		}
-	}
+	async function fetchUserChats() {}
 
 	// on initial render to get initial chats
 	useEffect(() => {
@@ -31,7 +21,7 @@ function Main({ userInfo, setUserInfo, setDisplayedPage }) {
 	return (
 		<main className="main">
 			<Navbar userInfo={userInfo} setUserInfo={setUserInfo} setDisplayedPage={setDisplayedPage} />
-			<SidebarChatContainer userChatsIDs={userChatsIDs} userInfo={userInfo} fetchUserChats={fetchUserChats} />
+			<SidebarChatContainer userInfo={userInfo} fetchUserChats={fetchUserChats} />
 		</main>
 	);
 }
