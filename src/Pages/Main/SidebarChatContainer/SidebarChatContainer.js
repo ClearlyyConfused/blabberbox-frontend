@@ -39,7 +39,11 @@ function SidebarChatContainer({ userChatsIDs, userInfo, fetchUserChats }) {
 					table: 'Chats',
 				},
 				(payload) => {
-					updateChatsInfo(1);
+					if (currentChat === payload.new._id) {
+						updateChatsInfo(1);
+					} else if (userChatsIDs.includes(payload.new.name)) {
+						updateChatsInfo(0);
+					}
 				}
 			)
 			.subscribe();

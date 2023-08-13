@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import CurrentChatInfo from './CurrentChatInfo';
 import downChevron from '../../../images/chevron-down-icon.svg';
 import back from '../../../images/back-arrow-svgrepo-com.svg';
+import defaultPFP from '../../../images/Default_pfp.svg';
 import './CurrentChat.css';
 import ChatMessage from './ChatMessage';
 import supabase from '../../../supabaseConfig';
@@ -13,8 +14,12 @@ function CurrentChat({ currentChat, userInfo, sendMessage, fetchUserChats, setCu
 	const [userProfileImages, setUserProfileImages] = useState();
 
 	async function fetchProfileImage(username) {
-		const { data, error } = await supabase.from('Users').select().eq('username', userInfo.username);
-		return [data[0].username, data[0].image];
+		const { data, error } = await supabase.from('Users').select().eq('username', username);
+		if (data[0].image) {
+			return [data[0].username, data[0].image];
+		} else {
+			return [data[0].username, defaultPFP];
+		}
 	}
 	// fetches profile image of all users in the chat to display
 	async function fetchAllProfileImages(users) {
