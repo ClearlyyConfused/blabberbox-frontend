@@ -8,7 +8,7 @@ import supabase from '../../supabaseConfig';
 // updates user's chats whenever user creates/joins a chat to get an updated list of chats
 function Main({ userInfo, setUserInfo, setDisplayedPage }) {
 	// obtained from fetchUserChats() on userInfo
-	const [userChatsIDs, setUserChatsIDs] = useState();
+	const [userChatsIDs, setUserChatsIDs] = useState([]);
 
 	// sets userChatIDs to fetched chat IDs
 	async function fetchUserChats() {

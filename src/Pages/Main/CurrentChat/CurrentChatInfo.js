@@ -16,12 +16,16 @@ function CurrentChatInfo({ currentChat, userInfo, fetchUserChats, setCurrentChat
 
 	// delete chat from user
 	async function handleSubmit() {
-		// update chat's list of users
+		// update chat's list of users or delete chat if last user leaves
 		const chatData = await getChatInfo(currentChat.name, currentChat.password);
-		const { error1 } = await supabase
-			.from('Chats')
-			.update({ users: chatData.users.filter((e) => e !== userInfo.username) })
-			.eq('_id', chatData._id);
+		if (chatData.users.length === 1) {
+			const { error } = await supabase.from('Chats').delete().eq('_id', chatData._id);
+		} else {
+			const { error1 } = await supabase
+				.from('Chats')
+				.update({ users: chatData.users.filter((e) => e !== userInfo.username) })
+				.eq('_id', chatData._id);
+		}
 
 		// update user's list of chats
 		const { data, userError } = await supabase

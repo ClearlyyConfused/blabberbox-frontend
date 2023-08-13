@@ -12,7 +12,9 @@ function ChatDisplayLogic(userChatsIDs, setChatsInfo) {
 		let arr = [];
 		for (const chatID of userChatsIDs) {
 			const chat = await fetchChatInfo(chatID);
-			arr.push(chat);
+			if (chat) {
+				arr.push(chat);
+			}
 		}
 
 		// sorts messages by latest

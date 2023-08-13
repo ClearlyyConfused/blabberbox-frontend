@@ -15,16 +15,9 @@ function SidebarChatContainer({ userChatsIDs, userInfo, fetchUserChats }) {
 	// get logic for all components
 	const { updateChatsInfo, sendMessage, getCurrentChatInfo } = SidebarChatLogic(userChatsIDs, setChatsInfo);
 
-	// whenever user's chat IDs change, set an interval to fetch info from all the chatIDs
 	useEffect(() => {
 		if (userChatsIDs !== undefined) {
 			updateChatsInfo();
-			const timer = setInterval(() => {
-				//	updateChatsInfo();
-			}, 10000);
-			return () => {
-				clearInterval(timer);
-			};
 		}
 	}, [userChatsIDs]);
 

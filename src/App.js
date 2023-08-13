@@ -12,8 +12,6 @@ function App() {
 	// obtained from login component
 	const [userInfo, setUserInfo] = useState();
 
-	console.log(userInfo);
-
 	useEffect(() => {
 		if (localStorage.userInfo !== undefined) {
 			setUserInfo(JSON.parse(localStorage.getItem('userInfo')));
