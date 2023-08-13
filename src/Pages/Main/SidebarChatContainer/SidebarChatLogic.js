@@ -1,6 +1,6 @@
 import supabase from '../../../supabaseConfig';
 
-function ChatDisplayLogic(userChatsIDs, setChatsInfo) {
+function ChatDisplayLogic(userChatsIDs, setChatsInfo, userInfo) {
 	// return chat data for the inputted chatID
 	async function fetchChatInfo(chatName) {
 		const { data, error } = await supabase.from('Chats').select().eq('name', chatName);
@@ -12,8 +12,11 @@ function ChatDisplayLogic(userChatsIDs, setChatsInfo) {
 		let arr = [];
 		for (const chatID of userChatsIDs) {
 			const chat = await fetchChatInfo(chatID);
+
 			if (chat) {
-				arr.push(chat);
+				if (chat.users.includes(userInfo.username)) {
+					arr.push(chat);
+				}
 			}
 		}
 
