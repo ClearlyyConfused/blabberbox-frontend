@@ -8,7 +8,7 @@ import ChatMessage from './ChatMessage';
 import supabase from '../../../supabaseConfig';
 
 // is the current chat being displayed on the screen, user can send messages to that chat
-function CurrentChat({ currentChat, userInfo, setCurrentChat }) {
+function CurrentChat({ currentChat, userInfo, setCurrentChat, updateUserInfo }) {
 	const [display, setDisplay] = useState('chat');
 	const [x, setX] = useState(); // for resetting chat after switching chats
 	const [userProfileImages, setUserProfileImages] = useState();
@@ -130,7 +130,12 @@ function CurrentChat({ currentChat, userInfo, setCurrentChat }) {
 					<img src={back} alt="" />
 					<h1>{currentChat.name} info</h1>
 				</div>
-				<CurrentChatInfo currentChat={currentChat} userInfo={userInfo} setCurrentChat={setCurrentChat} />
+				<CurrentChatInfo
+					currentChat={currentChat}
+					userInfo={userInfo}
+					setCurrentChat={setCurrentChat}
+					updateUserInfo={updateUserInfo}
+				/>
 			</section>
 		);
 	}

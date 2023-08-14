@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import ChatSidebar from '../ChatSidebar/ChatSidebar';
 import CurrentChat from '../CurrentChat/CurrentChat';
-import SidebarChatLogic from './SidebarChatLogic';
 import './ChatDisplay.css';
 import supabase from '../../../supabaseConfig';
 
@@ -14,10 +13,15 @@ function SidebarChatContainer({ userInfo, updateUserInfo, chatsInfo, updateChats
 	const [currentChatInfo, setCurrentChatInfo] = useState();
 
 	useEffect(() => {
+		let f = 0;
 		for (const chat of chatsInfo) {
 			if (chat._id === currentChatID) {
 				setCurrentChatInfo(chat);
+				f = 1;
 			}
+		}
+		if (f === 0) {
+			setCurrentChatInfo(undefined);
 		}
 	}, [chatsInfo, currentChatID]);
 
@@ -53,7 +57,12 @@ function SidebarChatContainer({ userInfo, updateUserInfo, chatsInfo, updateChats
 			/>
 
 			{/* CurrentChat component displays the current chat info and allows to send messages to that chat */}
-			<CurrentChat currentChat={currentChatInfo} userInfo={userInfo} setCurrentChat={setCurrentChatID} />
+			<CurrentChat
+				currentChat={currentChatInfo}
+				userInfo={userInfo}
+				setCurrentChat={setCurrentChatID}
+				updateUserInfo={updateUserInfo}
+			/>
 		</main>
 	);
 }

@@ -96,32 +96,6 @@ function HelperFunctions() {
 		);
 	}
 
-	// send message to current chat
-	async function sendMessage(message, img, userInfo, currentChatInfo) {
-		let image = '';
-		if (img) {
-			image = await uploadImage(img);
-		}
-
-		const { data, chatError } = await supabase.from('Chats').select().eq('name', currentChatInfo.name);
-		const previousChatData = data[0];
-
-		const newMessage = { user: userInfo.username, message: message, image: image, timeSent: new Date() };
-
-		const { error } = await supabase
-			.from('Chats')
-			.update({ messages: [...previousChatData.messages, newMessage] })
-			.eq('_id', previousChatData._id);
-	}
-
-	function getCurrentChatInfo(chatsInfo, currentChat) {
-		for (const chat of chatsInfo) {
-			if (chat._id === currentChat) {
-				return chat;
-			}
-		}
-	}
-
 	return { updateUserInfoHelper, updateChatsInfoHelper };
 }
 

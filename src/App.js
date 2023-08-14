@@ -8,6 +8,7 @@ import HelperFunctions from './HelperFunctions';
 // controls which component (login/register/main) to display according to displayedPage
 // gets userInfo from Login, then passes it into Main
 function App() {
+	console.log(localStorage.userInfo);
 	// sets current page display
 	const [displayedPage, setDisplayedPage] = useState('Login');
 	// obtained from login component
