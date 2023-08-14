@@ -62,15 +62,7 @@ function ChatDisplayLogic(userInfo) {
 		);
 	}
 
-	function getCurrentChatInfo(chatsInfo, currentChat) {
-		for (const chat of chatsInfo) {
-			if (chat._id === currentChat) {
-				return chat;
-			}
-		}
-	}
-
-	return { updateChatsInfo, getCurrentChatInfo };
+	return { updateChatsInfo };
 }
 
 export default ChatDisplayLogic;
