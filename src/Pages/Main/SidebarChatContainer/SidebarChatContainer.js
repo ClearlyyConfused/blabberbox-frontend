@@ -6,17 +6,17 @@ import './ChatDisplay.css';
 import supabase from '../../../supabaseConfig';
 
 // also displays chat sidebar
-function SidebarChatContainer({ userInfo, fetchUserChats }) {
+function SidebarChatContainer({ userInfo, updateUserInfo, chatsInfo, updateChatsInfo }) {
 	// array of info for each chat
-	const [chatsInfo, setChatsInfo] = useState([]);
+	// const [chatsInfo, setChatsInfo] = useState([]);
 	// current chat to display
 	const [currentChat, setCurrentChat] = useState();
 	// get logic for all components
-	const { updateChatsInfo, sendMessage, getCurrentChatInfo } = SidebarChatLogic(setChatsInfo, userInfo);
+	const { sendMessage, getCurrentChatInfo } = SidebarChatLogic(userInfo);
 
 	useEffect(() => {
 		if (userInfo.chats !== undefined) {
-			updateChatsInfo();
+			// updateChatsInfo();
 		}
 	}, []);
 
@@ -48,7 +48,7 @@ function SidebarChatContainer({ userInfo, fetchUserChats }) {
 				chatsInfo={chatsInfo}
 				setCurrentChat={setCurrentChat}
 				userInfo={userInfo}
-				fetchUserChats={fetchUserChats}
+				updateUserInfo={updateUserInfo}
 			/>
 
 			{/* CurrentChat component displays the current chat info and allows to send messages to that chat */}
@@ -56,7 +56,6 @@ function SidebarChatContainer({ userInfo, fetchUserChats }) {
 				currentChat={getCurrentChatInfo(chatsInfo, currentChat)}
 				userInfo={userInfo}
 				sendMessage={sendMessage}
-				fetchUserChats={fetchUserChats}
 				setCurrentChat={setCurrentChat}
 			/>
 		</main>

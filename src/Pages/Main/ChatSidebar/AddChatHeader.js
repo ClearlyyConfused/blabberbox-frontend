@@ -4,18 +4,14 @@ import ChatJoinForm from './ChatJoinForm';
 import add from '../../../images/add-button-svgrepo-com.svg';
 import back from '../../../images/back-arrow-svgrepo-com.svg';
 
-function AddChatHeader({ userInfo, fetchUserChats, setAddChatDisplay, addChatDisplay }) {
+function AddChatHeader({ userInfo, setAddChatDisplay, addChatDisplay }) {
 	const [formDisplay, setFormDisplay] = useState('');
 
 	if (formDisplay === 'create chat') {
-		return (
-			<ChatCreateForm userInfo={userInfo} fetchUserChats={fetchUserChats} setFormDisplay={setFormDisplay} />
-		);
+		return <ChatCreateForm userInfo={userInfo} setFormDisplay={setFormDisplay} />;
 	}
 	if (formDisplay === 'join chat') {
-		return (
-			<ChatJoinForm userInfo={userInfo} fetchUserChats={fetchUserChats} setFormDisplay={setFormDisplay} />
-		);
+		return <ChatJoinForm userInfo={userInfo} setFormDisplay={setFormDisplay} />;
 	}
 
 	return (

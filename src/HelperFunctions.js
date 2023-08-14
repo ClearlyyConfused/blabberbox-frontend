@@ -1,6 +1,40 @@
-import supabase from '../../../supabaseConfig';
+import APIcalls from './APIcalls';
+import supabase from './supabaseConfig';
 
-function ChatDisplayLogic(userInfo) {
+function HelperFunctions() {
+	const { fetchUserInfo } = APIcalls();
+
+	async function updateUserInfoHelper(username, password, setUserInfo) {
+		const userData = await fetchUserInfo(username, password);
+
+		// store user info in state
+		setUserInfo({
+			userID: userData._id,
+			username: userData.username,
+			password: userData.password,
+			chats: userData.chats,
+			image: userData.image,
+		});
+
+		// store user info in local storage
+		localStorage.setItem(
+			'userInfo',
+			JSON.stringify({
+				userID: userData._id,
+				username: userData.username,
+				password: userData.password,
+				chats: userData.chats,
+				image: userData.image,
+			})
+		);
+	}
+
+	// return chat data for the inputted chatID
+	async function fetchChatInfo(chatName) {
+		const { data, error } = await supabase.from('Chats').select().eq('name', chatName);
+		return data[0];
+	}
+
 	// return chat data for the inputted chatID
 	async function fetchChatInfo(chatName) {
 		const { data, error } = await supabase.from('Chats').select().eq('name', chatName);
@@ -8,7 +42,7 @@ function ChatDisplayLogic(userInfo) {
 	}
 
 	// fetches chat info for each chat then updates overall chatsInfo
-	async function updateChatsInfo(f = 0) {
+	async function updateChatsInfoHelper(userInfo, setChatsInfo, f = 0) {
 		let arr = [];
 		for (const chatID of userInfo.chats) {
 			const chat = await fetchChatInfo(chatID);
@@ -35,7 +69,7 @@ function ChatDisplayLogic(userInfo) {
 			);
 		};
 		arr.sort(sorter);
-		//setChatsInfo([...arr].reverse());
+		setChatsInfo([...arr].reverse());
 
 		// if being called after a message is sent, reset chat scroll chat to bottom
 		if (f === 1) {
@@ -88,7 +122,7 @@ function ChatDisplayLogic(userInfo) {
 		}
 	}
 
-	return { updateChatsInfo, sendMessage, getCurrentChatInfo };
+	return { updateUserInfoHelper, updateChatsInfoHelper };
 }
 
-export default ChatDisplayLogic;
+export default HelperFunctions;

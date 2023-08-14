@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import supabase from '../../../supabaseConfig';
 
-function CurrentChatInfo({ currentChat, userInfo, fetchUserChats, setCurrentChat }) {
+function CurrentChatInfo({ currentChat, userInfo, setCurrentChat }) {
 	const [showPassword, setShowPassword] = useState(false);
 
 	async function getChatInfo(name, password) {
@@ -39,7 +39,6 @@ function CurrentChatInfo({ currentChat, userInfo, fetchUserChats, setCurrentChat
 			.update({ chats: userData.chats.filter((e) => e !== currentChat.name) })
 			.eq('_id', userData._id);
 
-		fetchUserChats();
 		setCurrentChat(undefined);
 	}
 

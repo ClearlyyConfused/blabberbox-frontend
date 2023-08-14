@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import supabase from '../../../supabaseConfig';
 
-function ChatCreateForm({ userInfo, fetchUserChats }) {
+function ChatCreateForm({ userInfo, updateUserInfo }) {
 	// shows error message if chat cannot be created
 	const [successFlag, setSuccessFlag] = useState(true);
 
@@ -31,7 +31,7 @@ function ChatCreateForm({ userInfo, fetchUserChats }) {
 			.update({ chats: [...userData.chats, event.target.elements.chatName.value] })
 			.eq('_id', userData._id);
 
-		fetchUserChats();
+		updateUserInfo();
 		event.target.elements.chatName.value = '';
 		event.target.elements.password.value = '';
 	}

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import supabase from '../../../supabaseConfig';
 
-function ChatJoinForm({ userInfo, fetchUserChats }) {
+function ChatJoinForm({ userInfo, updateUserInfo }) {
 	// shows error message if cannot join chat
 	const [successFlag, setSuccessFlag] = useState(true);
 
@@ -40,7 +40,7 @@ function ChatJoinForm({ userInfo, fetchUserChats }) {
 			.update({ chats: [...userData.chats, event.target.elements.chatName.value] })
 			.eq('_id', userData._id);
 
-		fetchUserChats();
+		updateUserInfo();
 		event.target.elements.chatName.value = '';
 		event.target.elements.password.value = '';
 	}

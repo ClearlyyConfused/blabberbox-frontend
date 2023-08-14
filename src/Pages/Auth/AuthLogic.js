@@ -1,10 +1,10 @@
-import HelperFunctions from '../../HelperFunctions/HelperFunctions';
+import HelperFunctions from '../../HelperFunctions';
 
 function AuthLogic() {
-	const { updateUserInfo } = HelperFunctions();
+	const { updateUserInfoHelper } = HelperFunctions();
 
 	async function login(username, password, setUserInfo, setDisplayedPage) {
-		await updateUserInfo(username, password, setUserInfo);
+		await updateUserInfoHelper(username, password, setUserInfo);
 		setDisplayedPage('Main');
 	}
 

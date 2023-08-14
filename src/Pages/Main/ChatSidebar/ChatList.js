@@ -1,6 +1,6 @@
 // list of chats being displayed
 // displays latest message from each chat
-function ChatList({ chatsInfo, setCurrentChat, userInfo, fetchUserChats }) {
+function ChatList({ chatsInfo, setCurrentChat, userInfo }) {
 	return (
 		<section className="chat-list-container">
 			<ol className="chat-list">
