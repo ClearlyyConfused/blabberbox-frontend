@@ -8,7 +8,7 @@ import ChatMessage from './ChatMessage';
 import supabase from '../../../supabaseConfig';
 
 // is the current chat being displayed on the screen, user can send messages to that chat
-function CurrentChat({ currentChat, userInfo, sendMessage, setCurrentChat }) {
+function CurrentChat({ currentChat, userInfo, setCurrentChat }) {
 	const [display, setDisplay] = useState('chat');
 	const [x, setX] = useState(); // for resetting chat after switching chats
 	const [userProfileImages, setUserProfileImages] = useState();
@@ -38,25 +38,36 @@ function CurrentChat({ currentChat, userInfo, sendMessage, setCurrentChat }) {
 		}
 	}, [currentChat]);
 
+	function convertToBase64(file) {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => resolve(reader.result);
+		});
+	}
+
 	// calls sendMessage with info from form
-	function handleMessage(event) {
+	async function handleMessage(event) {
 		event.preventDefault();
 		const message = event.target.elements.message.value;
+		let image = '';
 		// if message has an image, convert it then call sendMessage with result
 		if (event.target.elements.messageImage.files[0] !== undefined) {
-			let reader = new FileReader();
-			reader.readAsDataURL(event.target.elements.messageImage.files[0]);
-			reader.onloadend = () => {
-				const image = reader.result;
-				sendMessage(message, image, userInfo, currentChat);
-				event.target.elements.message.value = '';
-				event.target.elements.messageImage.value = '';
-			};
-		} // if not, send ""
-		else {
-			sendMessage(message, '', userInfo, currentChat);
-			event.target.elements.message.value = '';
+			image = await convertToBase64(event.target.elements.messageImage.files[0]);
 		}
+
+		const { data, chatError } = await supabase.from('Chats').select().eq('name', currentChat.name);
+		const previousChatData = data[0];
+
+		const newMessage = { user: userInfo.username, message: message, image: image, timeSent: new Date() };
+
+		const { error } = await supabase
+			.from('Chats')
+			.update({ messages: [...previousChatData.messages, newMessage] })
+			.eq('_id', previousChatData._id);
+
+		event.target.elements.message.value = '';
+		event.target.elements.messageImage.value = '';
 	}
 
 	// sets display back to chat after changing chats (if, for example, changing while displaying chat info)

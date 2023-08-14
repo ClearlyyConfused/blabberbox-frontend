@@ -12,7 +12,7 @@ function SidebarChatContainer({ userInfo, updateUserInfo, chatsInfo, updateChats
 	// current chat to display
 	const [currentChat, setCurrentChat] = useState();
 	// get logic for all components
-	const { sendMessage, getCurrentChatInfo } = SidebarChatLogic(userInfo);
+	const { getCurrentChatInfo } = SidebarChatLogic(userInfo);
 
 	useEffect(() => {
 		if (userInfo.chats !== undefined) {
@@ -55,7 +55,6 @@ function SidebarChatContainer({ userInfo, updateUserInfo, chatsInfo, updateChats
 			<CurrentChat
 				currentChat={getCurrentChatInfo(chatsInfo, currentChat)}
 				userInfo={userInfo}
-				sendMessage={sendMessage}
 				setCurrentChat={setCurrentChat}
 			/>
 		</main>

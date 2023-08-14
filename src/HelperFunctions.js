@@ -42,6 +42,7 @@ function HelperFunctions() {
 	}
 
 	// fetches chat info for each chat then updates overall chatsInfo
+	// f(1) -> chat scrolls to bottom after updating
 	async function updateChatsInfoHelper(userInfo, setChatsInfo, f = 0) {
 		let arr = [];
 		for (const chatID of userInfo.chats) {
@@ -71,7 +72,6 @@ function HelperFunctions() {
 		arr.sort(sorter);
 		setChatsInfo([...arr].reverse());
 
-		// if being called after a message is sent, reset chat scroll chat to bottom
 		if (f === 1) {
 			const element = document.getElementsByClassName('chatbox');
 			if (element[0] !== undefined) {
