@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
 import defaultPFP from '../../../images/Default_pfp.svg';
-
-function diffMinutes(date1, date2) {
-	const d1 = new Date(date1).getTime();
-	const d2 = new Date(date2).getTime();
-	return Math.round((d1 - d2) / 60000);
-}
+import HelperFunctions from '../../../HelperFunctions';
 
 function ChatMessage({ messages, userInfo, userProfileImages }) {
+	const { diffMinutes } = HelperFunctions();
+
 	// groups messages by if they are sent by the same person in a certain amount of minutes
 	// Ex. user1 sends 3 messages within 3 minutes are grouped
 	const [groupedMessages, setGroupedMessages] = useState([]);

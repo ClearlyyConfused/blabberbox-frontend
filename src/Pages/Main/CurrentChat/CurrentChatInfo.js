@@ -1,53 +1,9 @@
 import { useState } from 'react';
-import supabase from '../../../supabaseConfig';
+import CurrentChatLogic from './CurrentChatLogic';
 
-function CurrentChatInfo({ currentChat, userInfo, fetchUserChats, setCurrentChat }) {
+function CurrentChatInfo({ currentChat, userInfo, setCurrentChat, updateUserInfo }) {
 	const [showPassword, setShowPassword] = useState(false);
-
-	async function getChatInfo(name, password) {
-		// update chat's list of users
-		const { data, chatError } = await supabase
-			.from('Chats')
-			.select()
-			.eq('name', name)
-			.eq('password', password);
-		return data[0];
-	}
-
-	// delete chat from user
-	async function handleSubmit() {
-		// update chat's list of users
-		const chatData = await getChatInfo(currentChat.name, currentChat.password);
-		const { error1 } = await supabase
-			.from('Chats')
-			.update({ users: chatData.users.filter((e) => e !== userInfo.username) })
-			.eq('_id', chatData._id);
-
-		// update user's list of chats
-		const { data, userError } = await supabase
-			.from('Users')
-			.select()
-			.eq('username', userInfo.username)
-			.eq('password', userInfo.password);
-		const userData = data[0];
-		const { error2 } = await supabase
-			.from('Users')
-			.update({ chats: userData.chats.filter((e) => e !== currentChat.name) })
-			.eq('_id', userData._id);
-
-		fetchUserChats();
-		setCurrentChat(undefined);
-	}
-
-	function countUserMessages() {
-		let count = 0;
-		for (const message of currentChat.messages) {
-			if (message.user === userInfo.username) {
-				count++;
-			}
-		}
-		return count;
-	}
+	const { countUserMessages, leaveChat } = CurrentChatLogic(currentChat, userInfo);
 
 	return (
 		<section className="chat-info">
@@ -72,7 +28,7 @@ function CurrentChatInfo({ currentChat, userInfo, fetchUserChats, setCurrentChat
 			</div>
 			<button
 				onClick={() => {
-					handleSubmit();
+					leaveChat(updateUserInfo, setCurrentChat);
 				}}
 			>
 				Leave Chat

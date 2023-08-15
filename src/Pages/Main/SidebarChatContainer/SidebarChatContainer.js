@@ -1,33 +1,29 @@
 import { useEffect, useState } from 'react';
 import ChatSidebar from '../ChatSidebar/ChatSidebar';
 import CurrentChat from '../CurrentChat/CurrentChat';
-import SidebarChatLogic from './SidebarChatLogic';
 import './ChatDisplay.css';
 import supabase from '../../../supabaseConfig';
 
-// fetches and displays chat info using userChatsIDs
-// also displays chat sidebar
-function SidebarChatContainer({ userChatsIDs, userInfo, fetchUserChats }) {
-	// array of info for each chat
-	const [chatsInfo, setChatsInfo] = useState([]);
+function SidebarChatContainer({ userInfo, updateUserInfo, chatsInfo, updateChatsInfo }) {
 	// current chat to display
-	const [currentChat, setCurrentChat] = useState();
-	// get logic for all components
-	const { updateChatsInfo, sendMessage, getCurrentChatInfo } = SidebarChatLogic(userChatsIDs, setChatsInfo);
+	const [currentChatID, setCurrentChatID] = useState();
+	const [currentChatInfo, setCurrentChatInfo] = useState();
 
-	// whenever user's chat IDs change, set an interval to fetch info from all the chatIDs
+	// gets and sets currentChatInfo corresponding to currentChatID from all chats info
 	useEffect(() => {
-		if (userChatsIDs !== undefined) {
-			updateChatsInfo();
-			const timer = setInterval(() => {
-				//	updateChatsInfo();
-			}, 10000);
-			return () => {
-				clearInterval(timer);
-			};
+		let f = 0;
+		for (const chat of chatsInfo) {
+			if (chat._id === currentChatID) {
+				setCurrentChatInfo(chat);
+				f = 1;
+			}
 		}
-	}, [userChatsIDs]);
+		if (f === 0) {
+			setCurrentChatInfo(undefined);
+		}
+	}, [chatsInfo, currentChatID]);
 
+	// update all chats info if change made to a user's chat
 	useEffect(() => {
 		const channel = supabase
 			.channel('table_db_changes')
@@ -39,29 +35,29 @@ function SidebarChatContainer({ userChatsIDs, userInfo, fetchUserChats }) {
 					table: 'Chats',
 				},
 				(payload) => {
-					updateChatsInfo(1);
+					if (currentChatID === payload.new._id) {
+						updateChatsInfo(1); // if change made to current chat, scroll chat to bottom
+					} else if (userInfo.chats.includes(payload.new.name)) {
+						updateChatsInfo(0);
+					}
 				}
 			)
 			.subscribe();
-	}, [currentChat]);
+	}, [currentChatID]);
 
 	return (
 		<main className="sidebar-chat-container">
-			{/* ChatList component displays each chat name and sets the current chat */}
 			<ChatSidebar
 				chatsInfo={chatsInfo}
-				setCurrentChat={setCurrentChat}
+				setCurrentChat={setCurrentChatID}
 				userInfo={userInfo}
-				fetchUserChats={fetchUserChats}
+				updateUserInfo={updateUserInfo}
 			/>
-
-			{/* CurrentChat component displays the current chat info and allows to send messages to that chat */}
 			<CurrentChat
-				currentChat={getCurrentChatInfo(chatsInfo, currentChat)}
+				currentChat={currentChatInfo}
 				userInfo={userInfo}
-				sendMessage={sendMessage}
-				fetchUserChats={fetchUserChats}
-				setCurrentChat={setCurrentChat}
+				setCurrentChat={setCurrentChatID}
+				updateUserInfo={updateUserInfo}
 			/>
 		</main>
 	);
