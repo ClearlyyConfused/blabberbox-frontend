@@ -1,19 +1,7 @@
-import { useState } from 'react';
-import ChatCreateForm from './ChatCreateForm';
-import ChatJoinForm from './ChatJoinForm';
 import add from '../../../images/add-button-svgrepo-com.svg';
 import back from '../../../images/back-arrow-svgrepo-com.svg';
 
-function AddChatHeader({ userInfo, setAddChatDisplay, addChatDisplay }) {
-	const [formDisplay, setFormDisplay] = useState('');
-
-	if (formDisplay === 'create chat') {
-		return <ChatCreateForm userInfo={userInfo} setFormDisplay={setFormDisplay} />;
-	}
-	if (formDisplay === 'join chat') {
-		return <ChatJoinForm userInfo={userInfo} setFormDisplay={setFormDisplay} />;
-	}
-
+function AddChatHeader({ setAddChatDisplay, addChatDisplay }) {
 	return (
 		<section className="add-chat">
 			<div onClick={() => setAddChatDisplay(!addChatDisplay)} className="add-chat-header">

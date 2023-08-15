@@ -8,13 +8,10 @@ import HelperFunctions from './HelperFunctions';
 // controls which component (login/register/main) to display according to displayedPage
 // gets userInfo from Login, then passes it into Main
 function App() {
-	console.log(localStorage.userInfo);
-	// sets current page display
-	const [displayedPage, setDisplayedPage] = useState('Login');
-	// obtained from login component
-	const [userInfo, setUserInfo] = useState();
-	const [chatsInfo, setChatsInfo] = useState([]);
 	const { updateUserInfoHelper, updateChatsInfoHelper } = HelperFunctions();
+	const [displayedPage, setDisplayedPage] = useState('Login'); // sets current page display
+	const [userInfo, setUserInfo] = useState(); // user's info
+	const [chatsInfo, setChatsInfo] = useState([]); // info for all of user's chats
 
 	async function updateUserInfo() {
 		updateUserInfoHelper(userInfo.username, userInfo.password, setUserInfo);

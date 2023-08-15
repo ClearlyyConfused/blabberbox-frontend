@@ -1,6 +1,6 @@
 import ChatList from './ChatList';
 import AddChatHeader from './AddChatHeader';
-import AddChatForms from './AddChatForms';
+import AddChatForms from './AddChatForms/AddChatForms';
 import './ChatSidebar.css';
 import { useState } from 'react';
 

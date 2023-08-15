@@ -1,13 +1,12 @@
 import APIcalls from './APIcalls';
-import supabase from './supabaseConfig';
 
 function HelperFunctions() {
-	const { fetchUserInfo } = APIcalls();
+	const { fetchUserInfo, fetchChatInfo } = APIcalls();
 
+	// calls DB, updates user's info in state variable and localStorage
 	async function updateUserInfoHelper(username, password, setUserInfo) {
 		const userData = await fetchUserInfo(username, password);
 
-		// store user info in state
 		setUserInfo({
 			userID: userData._id,
 			username: userData.username,
@@ -16,7 +15,6 @@ function HelperFunctions() {
 			image: userData.image,
 		});
 
-		// store user info in local storage
 		localStorage.setItem(
 			'userInfo',
 			JSON.stringify({
@@ -27,18 +25,6 @@ function HelperFunctions() {
 				image: userData.image,
 			})
 		);
-	}
-
-	// return chat data for the inputted chatID
-	async function fetchChatInfo(chatName) {
-		const { data, error } = await supabase.from('Chats').select().eq('name', chatName);
-		return data[0];
-	}
-
-	// return chat data for the inputted chatID
-	async function fetchChatInfo(chatName) {
-		const { data, error } = await supabase.from('Chats').select().eq('name', chatName);
-		return data[0];
 	}
 
 	// fetches chat info for each chat then updates overall chatsInfo
@@ -80,6 +66,14 @@ function HelperFunctions() {
 		}
 	}
 
+	function convertToBase64(file) {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => resolve(reader.result);
+		});
+	}
+
 	async function uploadImage(img) {
 		const reqOptions = {
 			method: 'POST',
@@ -96,7 +90,13 @@ function HelperFunctions() {
 		);
 	}
 
-	return { updateUserInfoHelper, updateChatsInfoHelper };
+	function diffMinutes(date1, date2) {
+		const d1 = new Date(date1).getTime();
+		const d2 = new Date(date2).getTime();
+		return Math.round((d1 - d2) / 60000);
+	}
+
+	return { updateUserInfoHelper, updateChatsInfoHelper, uploadImage, convertToBase64, diffMinutes };
 }
 
 export default HelperFunctions;

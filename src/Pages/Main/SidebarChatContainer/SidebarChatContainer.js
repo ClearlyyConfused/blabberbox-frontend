@@ -4,14 +4,12 @@ import CurrentChat from '../CurrentChat/CurrentChat';
 import './ChatDisplay.css';
 import supabase from '../../../supabaseConfig';
 
-// also displays chat sidebar
 function SidebarChatContainer({ userInfo, updateUserInfo, chatsInfo, updateChatsInfo }) {
-	// array of info for each chat
-	// const [chatsInfo, setChatsInfo] = useState([]);
 	// current chat to display
 	const [currentChatID, setCurrentChatID] = useState();
 	const [currentChatInfo, setCurrentChatInfo] = useState();
 
+	// gets and sets currentChatInfo corresponding to currentChatID from all chats info
 	useEffect(() => {
 		let f = 0;
 		for (const chat of chatsInfo) {
@@ -25,6 +23,7 @@ function SidebarChatContainer({ userInfo, updateUserInfo, chatsInfo, updateChats
 		}
 	}, [chatsInfo, currentChatID]);
 
+	// update all chats info if change made to a user's chat
 	useEffect(() => {
 		const channel = supabase
 			.channel('table_db_changes')
@@ -37,7 +36,7 @@ function SidebarChatContainer({ userInfo, updateUserInfo, chatsInfo, updateChats
 				},
 				(payload) => {
 					if (currentChatID === payload.new._id) {
-						updateChatsInfo(1);
+						updateChatsInfo(1); // if change made to current chat, scroll chat to bottom
 					} else if (userInfo.chats.includes(payload.new.name)) {
 						updateChatsInfo(0);
 					}
@@ -48,15 +47,12 @@ function SidebarChatContainer({ userInfo, updateUserInfo, chatsInfo, updateChats
 
 	return (
 		<main className="sidebar-chat-container">
-			{/* ChatList component displays each chat name and sets the current chat */}
 			<ChatSidebar
 				chatsInfo={chatsInfo}
 				setCurrentChat={setCurrentChatID}
 				userInfo={userInfo}
 				updateUserInfo={updateUserInfo}
 			/>
-
-			{/* CurrentChat component displays the current chat info and allows to send messages to that chat */}
 			<CurrentChat
 				currentChat={currentChatInfo}
 				userInfo={userInfo}
