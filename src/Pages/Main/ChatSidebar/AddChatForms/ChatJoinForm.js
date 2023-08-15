@@ -4,20 +4,32 @@ import APIcalls from '../../../../APIcalls';
 function ChatJoinForm({ userInfo, updateUserInfo }) {
 	// shows error message if cannot join chat
 	const [successFlag, setSuccessFlag] = useState(true);
-	const { fetchChatInfo, addUserToChat, addChatToUser } = APIcalls();
+	const { joinChat, addUserToChat, addChatToUser } = APIcalls();
 
 	async function handleSubmit(event) {
 		event.preventDefault();
 		setSuccessFlag(true);
 
-		const chatData = await fetchChatInfo(event.target.elements.chatName.value);
+		if (userInfo.chats.includes(event.target.elements.chatName.value)) {
+			setSuccessFlag('Already joined chat');
+			return;
+		}
 
-		await addUserToChat(chatData, userInfo);
-		await addChatToUser(userInfo, chatData);
+		const chatData = await joinChat(
+			event.target.elements.chatName.value,
+			event.target.elements.password.value
+		);
 
-		updateUserInfo();
-		event.target.elements.chatName.value = '';
-		event.target.elements.password.value = '';
+		if (chatData) {
+			await addUserToChat(chatData, userInfo);
+			await addChatToUser(userInfo, chatData);
+
+			updateUserInfo();
+			event.target.elements.chatName.value = '';
+			event.target.elements.password.value = '';
+		} else {
+			setSuccessFlag(false);
+		}
 	}
 
 	return (

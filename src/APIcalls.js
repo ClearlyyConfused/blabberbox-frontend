@@ -18,6 +18,16 @@ function APIcalls() {
 		return data[0];
 	}
 
+	// return chat data for the inputted chatName and chatPassword
+	async function joinChat(chatName, chatPassword) {
+		const { data, error } = await supabase
+			.from('Chats')
+			.select()
+			.eq('name', chatName)
+			.eq('password', chatPassword);
+		return data[0];
+	}
+
 	// add user to chat
 	async function addChatToUser(userData, chatData) {
 		const { error } = await supabase
@@ -71,7 +81,7 @@ function APIcalls() {
 
 	// inserts a new chat in the DB
 	async function createNewChat(chatName, chatPassword, firstUser) {
-		const { chatData, chatError } = await supabase.from('Chats').insert([
+		const { chatData, error } = await supabase.from('Chats').insert([
 			{
 				name: chatName,
 				password: chatPassword,
@@ -79,6 +89,10 @@ function APIcalls() {
 				messages: [],
 			},
 		]);
+
+		if (!error) {
+			return true;
+		}
 	}
 
 	return {
@@ -91,6 +105,7 @@ function APIcalls() {
 		createNewChat,
 		addChatToUser,
 		addUserToChat,
+		joinChat,
 	};
 }
 

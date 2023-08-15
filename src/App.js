@@ -13,8 +13,6 @@ function App() {
 	const [userInfo, setUserInfo] = useState(); // user's info
 	const [chatsInfo, setChatsInfo] = useState([]); // info for all of user's chats
 
-	console.log(userInfo);
-
 	async function updateUserInfo() {
 		updateUserInfoHelper(userInfo.username, userInfo.password, setUserInfo);
 	}

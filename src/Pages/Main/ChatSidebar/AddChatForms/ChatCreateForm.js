@@ -10,13 +10,23 @@ function ChatCreateForm({ userInfo, updateUserInfo }) {
 		event.preventDefault();
 		setSuccessFlag(true);
 
-		await createNewChat(event.target.elements.chatName.value, event.target.elements.password.value, userInfo);
-		const chatData = await fetchChatInfo(event.target.elements.chatName.value);
-		await addChatToUser(userInfo, chatData);
+		const result = await createNewChat(
+			event.target.elements.chatName.value,
+			event.target.elements.password.value,
+			userInfo
+		);
 
-		updateUserInfo();
-		event.target.elements.chatName.value = '';
-		event.target.elements.password.value = '';
+		// if creating new chat successful
+		if (result) {
+			const chatData = await fetchChatInfo(event.target.elements.chatName.value);
+			await addChatToUser(userInfo, chatData);
+
+			updateUserInfo();
+			event.target.elements.chatName.value = '';
+			event.target.elements.password.value = '';
+		} else {
+			setSuccessFlag(false);
+		}
 	}
 
 	return (
