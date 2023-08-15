@@ -12,8 +12,8 @@ function ChatJoinForm({ userInfo, updateUserInfo }) {
 
 		const chatData = await fetchChatInfo(event.target.elements.chatName.value);
 
-		addUserToChat(chatData, userInfo);
-		addChatToUser(userInfo, chatData);
+		await addUserToChat(chatData, userInfo);
+		await addChatToUser(userInfo, chatData);
 
 		updateUserInfo();
 		event.target.elements.chatName.value = '';
