@@ -51,7 +51,7 @@ function Login({ setUserInfo, setDisplayedPage }) {
 					</div>
 					<div>
 						<label htmlFor="password">PASSWORD</label>
-						<input id="password" type="text" />
+						<input id="password" type="password" />
 					</div>
 					<button
 						type="button"

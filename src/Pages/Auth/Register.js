@@ -51,7 +51,7 @@ function Register({ setDisplayedPage, setUserInfo }) {
 					</div>
 					<div>
 						<label htmlFor="password">PASSWORD</label>
-						<input id="password" type="text" />
+						<input id="password" type="password" minLength={6} />
 					</div>
 					<button type="button" onClick={() => setDisplayedPage('Login')}>
 						Back

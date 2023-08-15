@@ -39,7 +39,7 @@ function ChatCreateForm({ userInfo, updateUserInfo }) {
 				</div>
 				<div>
 					<label htmlFor="password">Password</label>
-					<input id="password" type="password" />
+					<input id="password" type="password" minLength={6} />
 				</div>
 				<button type="submit">Submit</button>
 			</form>
