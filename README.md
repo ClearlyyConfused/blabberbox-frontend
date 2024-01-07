@@ -23,6 +23,6 @@ https://blabberbox.vercel.app/
 
 ## Screenshots 📸
 
-![App Screenshot 1](./README_images/Screenshot%202023-07-28%20144204.png)
-![App Screenshot 2](./README_images/Screenshot%202023-07-26%20213308.png)
-![App Screenshot 3](./README_images/Screenshot%202023-07-26%20213349.png)
+![App Screenshot 1](./README_images/blabberbox.png)
+![App Screenshot 2](./README_images/blabberbox2.png)
+![App Screenshot 3](./README_images/blabberbox3.png)
